@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -20,9 +21,13 @@ android {
     }
 }
 
+//kapt {
+//    generateStubs true
+//}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     implementation 'com.google.android.material:material:1.0.0-beta01'
@@ -30,4 +35,22 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'com.github.akarnokd:rxjava2-extensions:0.19.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    implementation 'com.squareup.retrofit2:retrofit:' + retrofit2
+    implementation 'com.squareup.retrofit2:converter-gson:' + retrofit2
+
+    implementation 'com.google.dagger:dagger-android:' + dagger2
+    implementation 'com.google.dagger:dagger-android-support:' + dagger2
+//    kapt 'com.google.dagger:dagger-compiler:' + dagger2
+    annotationProcessor 'com.google.dagger:dagger-android-processor:' + dagger2
+    annotationProcessor 'com.google.dagger:dagger-compiler:' + dagger2
+
+    implementation "android.arch.persistence.room:runtime:" + room
+    implementation 'android.arch.persistence.room:rxjava2:' + room
+    annotationProcessor "android.arch.persistence.room:compiler:" + room
+    implementation 'com.jakewharton.timber:timber:4.7.0'
 }

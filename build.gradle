@@ -25,3 +25,13 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    retrofit2 = '2.4.0'
+    dagger2 = '2.15'
+    room = '1.1.0'
+    okhttp = '3.10.0'
+    guava = '25.0'
+    multdex = '1.0.3'
+    navigationVersion = "1.0.0-alpha01"
+}
