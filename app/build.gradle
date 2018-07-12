@@ -3,8 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'kotlin-kapt'
 
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
+
     compileSdkVersion 28
+
     defaultConfig {
         applicationId "com.chris.takenote"
         minSdkVersion 21
@@ -12,13 +18,123 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+//        multdex true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
         }
     }
+
+    signingConfigs {
+        debug {
+            storeFile file("../debug.keystore")
+            keyAlias 'AndroidDebugKey'
+        }
+
+        release {
+//            storeFile file("../debug.keystore")
+//            keyAlias 'AndroidDebugKey'
+            keyAlias releaseKeyAlias
+            keyPassword releaseKeyPassword
+            storeFile file('../uaes-baic-android.jks')
+            storePassword releaseKeyStorePassword
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include "x86", "armeabi-v7a"
+            universalApk false
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfig.release
+        }
+        debug {
+//            signingConfig signingConfig.debug
+        }
+    }
+
+    sourceSets {
+
+        main {
+            res.srcDirs += [
+                    'src/main/res_main'
+            ]
+        }
+
+        tst {
+            java.srcDirs += [
+                    'src/http/java'
+            ]
+        }
+    }
+
+    flavorDimensions("backend")
+    productFlavors {
+
+        mock {
+            dimension = 'backend'
+            manifestPlaceholders = [
+                    'AMAP'        : 'b672626a9ee72987e9cdc2b4461a50f5',
+                    'APUSH_KEY'   : '24675829',
+                    'APUSH_SECRET': '90868e4d9196667a14104da09ef9c053'
+            ]
+//            signingConfig signingConfig.debug
+        }
+
+        tst {
+            dimension = 'backend'
+//            signingConfig signingConfig.debug
+        }
+
+    }
+
+}
+
+// map for the version code that gives each ABI a value.
+ext.abiCodes = ['armeabi-v7a': 1, x86: 3]
+
+// For per-density APKs, create a similar map like this:
+// ext.densityCodes  ['mdpi': 1, 'hdpi':2, 'xhdpi': 3]
+
+import com.android.build.OutputFile
+
+// For each APK output variant, override versionCode with a combination of
+// ext.abiCodes * 1000 + variant.versionCode. In this example, variant.versionCode
+// is equal to defaultConfig.versionCode. If you configure product flavor that
+// define their own versionCode, variant.versionCode uses that value instead.
+android.applicationVariants.all {
+    variant ->
+        // Assigns a different version code for each ouput APK
+        // other_oil_cost than the universal APK.
+        variant.outputs.each { output ->
+            // Stores the value of ext.abiCodes that is associated with the ABI for this variant.
+            def baseAbiVersionCode =
+                    // Determines the ABI for this variant and returns the mapped value.
+                    project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+            // Because abiCodes.get() returns null for ABIs that are not mapped by ext.abiCodes,
+            // the following code does not override the version code for universal APKs.
+            if (baseAbiVersionCode != null) {
+                output.versionCodeOverride =
+                        baseAbiVersionCode * 1000 + variant.versionCode
+            }
+        }
+
+        variant.outputs.all {
+            outputFileName = outputFileName.replace(".apk", "-" + variant.versionName + "-build-" + releaseTime() + ".apk")
+        }
 }
 
 //kapt {
