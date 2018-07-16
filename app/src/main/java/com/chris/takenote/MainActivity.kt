@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.main_item_mian, parent, false)
+                    .inflate(R.layout.main_item_main, parent, false)
             return MainViewHolder(itemView)
         }
 
