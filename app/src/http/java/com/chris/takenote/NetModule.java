@@ -1,6 +1,6 @@
 package com.chris.takenote;
 
-import com.chris.takenote.data.HttpLogger;
+import com.chris.takenote.data.http.HttpLogger;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;

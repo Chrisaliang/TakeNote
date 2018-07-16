@@ -1,6 +1,7 @@
 package com.chris.takenote;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
@@ -8,11 +9,15 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public abstract class JsonModule {
+abstract class JsonModule {
+
+private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ2";
 
     @Provides
     @Singleton
-    public static Gson gson() {
-        return new Gson();
+    static Gson gson() {
+        return new GsonBuilder()
+                .setDateFormat(DATE_PATTERN)
+                .create();
     }
 }
