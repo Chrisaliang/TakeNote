@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwitchView">
+        <attr name="sv_startIconOpen" format="reference" />
+        <attr name="sv_startIconClose" format="reference" />
+        <attr name="sv_endIconOpen" format="reference" />
+        <attr name="sv_endIconClose" format="reference" />
+        <attr name="sv_bg" format="reference" />
+        <attr name="sv_selected" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="DemoProgressView">
+        <attr name="pv_circleColor" format="color|reference" />
+        <attr name="pv_progressBgColor" format="color|reference" />
+        <attr name="pv_progressColor" format="color|reference" />
+        <attr name="dpv_progress" format="integer" />
+        <attr name="pv_startOffsetDegrees" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="DriverManagerProgressView">
+        <attr name="pv_progress_drawable_padding" format="dimension|integer|reference" />
+        <attr name="pv_progress_text_size" format="dimension|float|reference" />
+        <attr name="pv_title_text_size" format="dimension|float|reference" />
+        <attr name="pv_progress_text_color" format="color|reference" />
+        <attr name="pv_title_text_color" format="color|reference" />
+        <attr name="pv_item_title" format="string|reference" />
+        <attr name="mpv_progress" format="integer|reference" />
+        <attr name="pv_progress_src" format="reference" />
+        <attr name="pv_progress_bg" format="reference" />
+        <attr name="pv_offset_factor" format="float" />
+        <attr name="pv_text_offset" format="float" />
+
+    </declare-styleable>
+
+</resources>
