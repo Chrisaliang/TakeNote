@@ -150,6 +150,12 @@ public class ProgressView extends View {
         canvas.drawRect(rect, paint);
 
         drawProgress(canvas);
+
+        drawText(canvas);
+    }
+
+    private void drawText(Canvas canvas) {
+        canvas.drawText("text", 100, 100, paint);
     }
 
     private void checkValue() {
