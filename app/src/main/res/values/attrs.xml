@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <declare-styleable name="ProgressView">
+        <attr name="pv_progress" format="integer|reference" />
+        <attr name="pgs_current_color" format="color|reference" />
+        <attr name="pgs_other_color" format="color|reference" />
+        <attr name="pv_currentDrawable" format="reference" />
+        <attr name="pv_otherDrawable" format="reference" />
+        <attr name="pv_gradientDrawable" format="reference" />
+        <attr name="pv_scale_bound_width" format="dimension|integer" />
+        <attr name="pv_scale_margin" format="dimension|integer" />
+        <attr name="pv_scale_length" format="dimension|integer" />
+    </declare-styleable>
+
     <declare-styleable name="SwitchView">
         <attr name="sv_startIconOpen" format="reference" />
         <attr name="sv_startIconClose" format="reference" />

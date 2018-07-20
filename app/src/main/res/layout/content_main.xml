@@ -22,9 +22,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#9a4ec1ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:pgs_current_color="#0915fa"
+        app:pv_progress="123"
+        tools:background="#9aff4e77" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
