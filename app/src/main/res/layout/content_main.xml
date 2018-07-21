@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:pgs_current_color="#0915fa"
-        app:pv_progress="123"
+        app:pv_progress="45"
         tools:background="#9aff4e77" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

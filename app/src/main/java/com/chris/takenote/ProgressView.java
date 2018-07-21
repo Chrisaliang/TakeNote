@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DrawFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -56,6 +57,7 @@ public class ProgressView extends View {
     private int bw;
     private Path rightPath = new Path();
     private Path leftPath = new Path();
+    private DrawFilter gradientFilter;
 
     public ProgressView(Context context) {
         this(context, null);
@@ -81,6 +83,8 @@ public class ProgressView extends View {
         progressPaint.setColor(progressOtherColor);
         paint.setStrokeWidth(1);
         paint.setStyle(Paint.Style.STROKE);
+
+        gradientFilter = new DrawFilter();
 
         TypedArray t = context.obtainStyledAttributes(attrs, R.styleable.ProgressView);
         scale_margin = t.getDimensionPixelSize(R.styleable.ProgressView_pv_scale_margin,
@@ -152,6 +156,46 @@ public class ProgressView extends View {
         drawProgress(canvas);
 
         drawText(canvas);
+
+        drawShadow(canvas);
+    }
+
+    private void drawShadow(Canvas canvas) {
+//        progressPaint.setStrokeWidth(2);
+        otherProgressDrawable.setBounds(otherRect);
+        currentProgressDrawable.setBounds(currentRect);
+        gradientProgressDrawable.setBounds(currentRect);
+        canvas.save();
+        canvas.setDrawFilter(gradientFilter);
+//        canvas.clipRect(0,0,getMeasuredWidth(),getMeasuredWidth());
+        canvas.scale(1f,-1f,getMeasuredWidth() / 2, getMeasuredHeight() / 1.65f);
+//        canvas.rotate(180, getMeasuredWidth() / 2, getMeasuredHeight() / 2);
+        if (progress == 0) {
+            for (int i = 1; i <= 100; i++) {
+                canvas.rotate(3.6f, px, py);
+                otherProgressDrawable.draw(canvas);
+            }
+        } else {
+            for (int i = 1; i <= 100; i++) {
+                canvas.rotate(3.6f, px, py);
+                if (i == progress) {
+                    currentProgressDrawable.draw(canvas);
+                } else if (i == progress + 1 || (progress == 100 && i == 1)) {
+                    canvas.save();
+                    canvas.clipPath(rightPath);
+                    gradientProgressDrawable.draw(canvas);
+                    canvas.restore();
+                } else if (i == progress - 1 || (progress == 1 && i == 100)) {
+                    canvas.save();
+                    canvas.clipPath(leftPath);
+                    gradientProgressDrawable.draw(canvas);
+                    canvas.restore();
+                } else {
+                    otherProgressDrawable.draw(canvas);
+                }
+            }
+        }
+        canvas.restore();
     }
 
     private void drawText(Canvas canvas) {
@@ -172,7 +216,7 @@ public class ProgressView extends View {
     }
 
     private void drawProgress(Canvas canvas) {
-        progressPaint.setStrokeWidth(2);
+//        progressPaint.setStrokeWidth(2);
         otherProgressDrawable.setBounds(otherRect);
         currentProgressDrawable.setBounds(currentRect);
         gradientProgressDrawable.setBounds(currentRect);
