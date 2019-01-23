@@ -1,4 +1,4 @@
-package com.chris.takenote
+package com.chris.eban
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

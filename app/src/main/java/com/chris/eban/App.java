@@ -1,4 +1,4 @@
-package com.chris.takenote;
+package com.chris.eban;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;

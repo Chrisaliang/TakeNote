@@ -1,4 +1,4 @@
-package com.chris.takenote.data.pojo
+package com.chris.eban.data.pojo
 
 import com.google.gson.annotations.SerializedName
 import java.util.*

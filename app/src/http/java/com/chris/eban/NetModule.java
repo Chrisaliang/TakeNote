@@ -1,6 +1,6 @@
-package com.chris.takenote;
+package com.chris.eban;
 
-import com.chris.takenote.data.http.HttpLogger;
+import com.chris.eban.data.http.HttpLogger;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;

@@ -1,4 +1,4 @@
-package com.chris.takenote;
+package com.chris.eban;
 
 interface ServiceEnvironmentConfig {
 

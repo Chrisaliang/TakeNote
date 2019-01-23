@@ -1,4 +1,4 @@
-package com.chris.takenote.demo;
+package com.chris.eban.demo;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.chris.takenote.R;
+import com.chris.eban.R;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;

@@ -1,7 +1,7 @@
-package com.chris.takenote.data.http
+package com.chris.eban.data.http
 
-import com.chris.takenote.data.pojo.Beauty
-import com.chris.takenote.data.pojo.CommonResult
+import com.chris.eban.data.pojo.Beauty
+import com.chris.eban.data.pojo.CommonResult
 import retrofit2.Call
 import retrofit2.http.GET
 

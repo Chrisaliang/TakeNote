@@ -1,4 +1,4 @@
-package com.chris.takenote;
+package com.chris.eban;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -1,4 +1,4 @@
-package com.chris.takenote;
+package com.chris.eban;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

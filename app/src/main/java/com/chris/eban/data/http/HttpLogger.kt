@@ -1,4 +1,4 @@
-package com.chris.takenote.data.http
+package com.chris.eban.data.http
 
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber

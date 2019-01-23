@@ -1,4 +1,4 @@
-package com.chris.takenote.demo;
+package com.chris.eban.demo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,7 +17,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.chris.takenote.R;
+import com.chris.eban.R;
 
 import androidx.annotation.Nullable;
 

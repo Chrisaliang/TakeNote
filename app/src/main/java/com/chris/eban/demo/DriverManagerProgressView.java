@@ -1,4 +1,4 @@
-package com.chris.takenote.demo;
+package com.chris.eban.demo;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -22,7 +22,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.chris.takenote.R;
+import com.chris.eban.R;
 
 import java.util.Locale;
 
