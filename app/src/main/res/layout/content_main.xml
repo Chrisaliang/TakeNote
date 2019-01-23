@@ -1,33 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMain"
+    <data>
+
+        <variable
+            name="eBan"
+            type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:itemCount="3"
-        tools:listitem="@layout/main_item_main" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".MainActivity"
+        tools:showIn="@layout/app_bar_main">
 
-    <com.chris.eban.ProgressView
-        android:id="@+id/progressView"
-        android:layout_width="300dp"
-        android:layout_height="525dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:pgs_current_color="#0915fa"
-        app:pv_progress="45"
-        tools:background="#9aff4e77" />
+        <TextView
+            android:id="@+id/empty_garden"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/eban_empty"
+            android:textSize="24sp"
+            tools:visibility="visible" />
+        <!--app:isGone="@{eBan}"-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="3"
+            tools:listitem="@layout/main_item_main" />
+        <!--app:isGone="@{eBan}"-->
+
+        <com.chris.eban.ProgressView
+            android:id="@+id/progressView"
+            android:layout_width="300dp"
+            android:layout_height="525dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:pgs_current_color="#0915fa"
+            app:pv_progress="45"
+            tools:background="#9aff4e77" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
