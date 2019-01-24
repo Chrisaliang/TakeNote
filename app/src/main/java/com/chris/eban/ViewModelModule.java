@@ -5,13 +5,12 @@ import com.chris.eban.common.EBanViewModelProviderFactory;
 
 import javax.inject.Singleton;
 
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ViewModelModule {
+class ViewModelModule {
     @Singleton
     @Provides
     static ViewModelProvider.Factory providerFactory() {
