@@ -1,4 +1,4 @@
-package com.chris.eban.demo;
+package com.chris.eban.common.demo;
 
 import android.annotation.TargetApi;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.chris.eban
+package com.chris.eban.presenter
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.chris.eban.demo;
+package com.chris.eban.common.demo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
