@@ -42,7 +42,7 @@ class MainFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        binding.eBan = true
+        binding.eBan = false
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
