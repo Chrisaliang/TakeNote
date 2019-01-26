@@ -11,6 +11,7 @@ import dagger.Provides;
 
 @Module
 class ViewModelModule {
+
     @Singleton
     @Provides
     static ViewModelProvider.Factory providerFactory() {

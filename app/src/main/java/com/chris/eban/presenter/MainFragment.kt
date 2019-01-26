@@ -25,8 +25,8 @@ class MainFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
-    @Inject
-    internal var factory: ViewModelProvider.Factory? = null
+//    @Inject
+//    internal var factory: ViewModelProvider.Factory? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
