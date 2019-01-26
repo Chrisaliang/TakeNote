@@ -1,6 +1,7 @@
 package com.chris.eban.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class EventListFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(EventListViewModel.class);
+        Log.d(TAG, "onActivityCreated: " + viewModel);
         binding.setVariable(BR.event, viewModel);
     }
 
