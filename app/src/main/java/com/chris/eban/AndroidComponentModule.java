@@ -1,5 +1,6 @@
 package com.chris.eban;
 
+import com.chris.eban.presenter.EventListFragment;
 import com.chris.eban.presenter.MainActivity;
 import com.chris.eban.presenter.MainFragment;
 
@@ -18,4 +19,7 @@ abstract class AndroidComponentModule {
 
     @ContributesAndroidInjector
     public abstract MainFragment mainFragment();
+
+    @ContributesAndroidInjector
+    public abstract EventListFragment eventListFragment();
 }

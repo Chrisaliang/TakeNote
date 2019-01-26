@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (savedInstanceState == null)
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_replace, MainFragment.newInstance())
+                    .replace(R.id.fragment_replace, EventListFragment())
                     .commitNow()
 
         fab.setOnClickListener { view ->
