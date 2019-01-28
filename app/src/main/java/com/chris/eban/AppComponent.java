@@ -11,7 +11,11 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidSupportInjectionModule.class,
         AndroidComponentModule.class,
         NetModule.class,
-//        ViewModelModule.class,
+        ViewModelModule.class,
+        UseCaseModule.class,
+        SchedulerModule.class,
+        NetModule.class,
+        RepositoryModule.class,
         JsonModule.class
 })
 public interface AppComponent extends AndroidInjector<App> {

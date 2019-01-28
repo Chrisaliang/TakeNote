@@ -22,16 +22,16 @@
             android:layout_gravity="center"
             android:text="@string/eban_empty"
             android:textSize="24sp"
-            app:isGone="@{!event.hasData}"
+            app:isGone="@{event.hasData}"
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMain"
+            android:id="@+id/list_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:isGone="@{event.hasData}"
             tools:itemCount="3"
-            tools:listitem="@layout/main_item_main" />
+            tools:listitem="@layout/item_event_list" />
+        <!--app:isGone="@{event.hasData}"-->
 
     </FrameLayout>
 </layout>

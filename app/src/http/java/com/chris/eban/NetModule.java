@@ -12,8 +12,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@SuppressWarnings("WeakerAccess")
 @Module
-public class NetModule {
+public abstract class NetModule {
 
     @Singleton
     @Provides

@@ -2,6 +2,7 @@ package com.chris.eban;
 
 
 import com.chris.eban.common.EBanViewModelProviderFactory;
+import com.chris.eban.domain.usecase.EventListQuery;
 
 import javax.inject.Singleton;
 
@@ -14,7 +15,7 @@ class ViewModelModule {
 
     @Singleton
     @Provides
-    static ViewModelProvider.Factory providerFactory() {
-        return new EBanViewModelProviderFactory();
+    static ViewModelProvider.Factory providerFactory(EventListQuery eventListQuery) {
+        return new EBanViewModelProviderFactory(eventListQuery);
     }
 }

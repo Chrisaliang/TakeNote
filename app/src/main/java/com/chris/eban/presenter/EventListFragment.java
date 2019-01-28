@@ -9,18 +9,30 @@ import android.view.ViewGroup;
 import com.chris.eban.BR;
 import com.chris.eban.R;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
 public class EventListFragment extends BaseFragment {
 
-    private static final String TAG = "EventList";
+    private static final String TAG = "EventListFragment";
     private ViewDataBinding binding;
     private EventListViewModel viewModel;
+    @Inject
+    ViewModelProvider.Factory factory;
+    private EventListAdapter eventListAdapter;
 
     @Nullable
     @Override
@@ -34,18 +46,30 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(EventListViewModel.class);
-        Log.d(TAG, "onActivityCreated: " + viewModel);
+        Log.e(TAG, "onActivityCreated: ");
+        viewModel = ViewModelProviders.of(this, factory).get(EventListViewModel.class);
+        Timber.tag(TAG).d("onActivityCreated: %s", viewModel);
         binding.setVariable(BR.event, viewModel);
+
+        viewModel.init();
+
+        viewModel.getEventList().observe(this, new Observer<List<EventItem>>() {
+            @Override
+            public void onChanged(List<EventItem> items) {
+                eventListAdapter.updateAll(items);
+            }
+        });
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        try {
-            Timber.tag(TAG).d("has data %b", viewModel.hasData.getValue());
-        } catch (Exception e) {
-            Timber.tag(TAG).e(e);
-        }
+        Log.e(TAG, "onViewCreated: ");
+
+        eventListAdapter = new EventListAdapter();
+        RecyclerView list = view.findViewById(R.id.list_event);
+        list.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        list.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+        list.setAdapter(eventListAdapter);
     }
 }
