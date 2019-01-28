@@ -1,6 +1,5 @@
 package com.chris.eban;
 
-
 import com.chris.eban.common.EBanViewModelProviderFactory;
 import com.chris.eban.domain.usecase.EventListQuery;
 

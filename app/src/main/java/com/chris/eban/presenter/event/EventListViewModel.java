@@ -1,6 +1,4 @@
-package com.chris.eban.presenter;
-
-import android.util.Log;
+package com.chris.eban.presenter.event;
 
 import com.chris.eban.domain.Result;
 import com.chris.eban.domain.entity.DMEventListItem;
@@ -12,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 public class EventListViewModel extends ViewModel implements SingleObserver<Result<List<DMEventListItem>>> {
 
@@ -28,7 +27,7 @@ public class EventListViewModel extends ViewModel implements SingleObserver<Resu
     }
 
     void init() {
-        Log.d(TAG, "init: this is viewModel and has data :" + hasData.getValue());
+        Timber.tag(TAG).d("init: this is viewModel and has data :%s", hasData.getValue());
         listQuery.execute().subscribe(this);
     }
 
@@ -40,21 +39,21 @@ public class EventListViewModel extends ViewModel implements SingleObserver<Resu
 
     @Override
     public void onSuccess(Result<List<DMEventListItem>> listResult) {
-        Log.d(TAG, "onSuccess: listSize:" + listResult.content.size());
+        Timber.tag(TAG).d("onSuccess: listSize:%s", listResult.content.size());
         List<EventItem> eventItems = mapper.map(listResult.content);
         if (eventItems != null && eventItems.size() > 0)
             hasData.setValue(true);
         else hasData.setValue(false);
         eventList.setValue(eventItems);
 
-        Log.d(TAG, "onSuccess: has data " + hasData.getValue());
+        Timber.tag(TAG).d("onSuccess: has data %s", hasData.getValue());
     }
 
     @Override
     public void onError(Throwable e) {
-        Log.e(TAG, "onError: ", e);
+        Timber.tag(TAG).e(e, "onError: ");
         hasData.setValue(false);
-        Log.d(TAG, "onError: has data " + hasData.getValue());
+        Timber.tag(TAG).d("onError: has data %s", hasData.getValue());
     }
 
     @Override

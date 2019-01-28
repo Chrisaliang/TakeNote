@@ -1,13 +1,13 @@
-package com.chris.eban.presenter;
+package com.chris.eban.presenter.event;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chris.eban.BR;
 import com.chris.eban.R;
+import com.chris.eban.presenter.BaseFragment;
 
 import java.util.List;
 
@@ -25,11 +25,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
+@SuppressWarnings("WeakerAccess")
 public class EventListFragment extends BaseFragment {
 
     private static final String TAG = "EventListFragment";
     private ViewDataBinding binding;
-    private EventListViewModel viewModel;
     @Inject
     ViewModelProvider.Factory factory;
     private EventListAdapter eventListAdapter;
@@ -46,8 +46,7 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.e(TAG, "onActivityCreated: ");
-        viewModel = ViewModelProviders.of(this, factory).get(EventListViewModel.class);
+        EventListViewModel viewModel = ViewModelProviders.of(this, factory).get(EventListViewModel.class);
         Timber.tag(TAG).d("onActivityCreated: %s", viewModel);
         binding.setVariable(BR.event, viewModel);
 
@@ -64,8 +63,6 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.e(TAG, "onViewCreated: ");
-
         eventListAdapter = new EventListAdapter();
         RecyclerView list = view.findViewById(R.id.list_event);
         list.setLayoutManager(new LinearLayoutManager(view.getContext()));

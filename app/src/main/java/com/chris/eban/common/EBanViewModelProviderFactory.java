@@ -1,7 +1,7 @@
 package com.chris.eban.common;
 
 import com.chris.eban.domain.usecase.EventListQuery;
-import com.chris.eban.presenter.EventListViewModel;
+import com.chris.eban.presenter.event.EventListViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

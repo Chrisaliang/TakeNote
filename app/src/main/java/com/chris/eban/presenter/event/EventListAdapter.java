@@ -1,4 +1,4 @@
-package com.chris.eban.presenter;
+package com.chris.eban.presenter.event;
 
 import android.view.LayoutInflater;
 import android.view.View;

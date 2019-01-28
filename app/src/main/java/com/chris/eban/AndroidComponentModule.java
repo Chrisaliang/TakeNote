@@ -1,8 +1,8 @@
 package com.chris.eban;
 
-import com.chris.eban.presenter.EventListFragment;
 import com.chris.eban.presenter.MainActivity;
 import com.chris.eban.presenter.MainFragment;
+import com.chris.eban.presenter.event.EventListFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

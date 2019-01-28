@@ -1,4 +1,4 @@
-package com.chris.eban.presenter;
+package com.chris.eban.presenter.event;
 
 import com.chris.eban.domain.entity.DMEventListItem;
 

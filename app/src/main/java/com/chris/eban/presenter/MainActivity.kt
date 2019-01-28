@@ -1,12 +1,14 @@
 package com.chris.eban.presenter
 
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.chris.eban.R
+import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
