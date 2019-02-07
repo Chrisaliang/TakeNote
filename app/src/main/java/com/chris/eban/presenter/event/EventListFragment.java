@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.chris.eban.BR;
 import com.chris.eban.R;
+import com.chris.eban.databinding.FragmentEventListBinding;
 import com.chris.eban.presenter.BaseFragment;
 
 import java.util.List;
@@ -16,7 +17,6 @@ import javax.inject.Inject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -29,7 +29,7 @@ import timber.log.Timber;
 public class EventListFragment extends BaseFragment {
 
     private static final String TAG = "EventListFragment";
-    private ViewDataBinding binding;
+    private FragmentEventListBinding binding;
     @Inject
     ViewModelProvider.Factory factory;
     private EventListAdapter eventListAdapter;

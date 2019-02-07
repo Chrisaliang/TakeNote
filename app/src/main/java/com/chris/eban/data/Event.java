@@ -1,4 +1,11 @@
 package com.chris.eban.data;
 
-public class Event {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+class Event {
+    @PrimaryKey
+    int id;
+    String title;
 }
