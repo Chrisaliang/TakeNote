@@ -1,16 +1,18 @@
 package com.chris.eban.presenter
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.chris.eban.R
 import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -27,8 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commitNow()
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            showAddLog()
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -37,6 +38,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showAddLog() {
+        val newEvent = LayoutInflater.from(this)
+                .inflate(R.layout.layout_new_event, null)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.main_new_event)
+                .setView(newEvent)
+                .create().show()
     }
 
     override fun onBackPressed() {
