@@ -15,8 +15,11 @@ import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private val TAG: String = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .replace(R.id.fragment_replace, EventListFragment())
                     .commitNow()
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             showAddLog()
         }
 
@@ -46,9 +49,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .inflate(R.layout.layout_new_event, null)
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.main_new_event)
+        builder.setTitle(R.string.main_event_new_event)
                 .setView(newEvent)
+//                .setPositiveButton("",null)
                 .create().show()
+        Timber.tag(TAG).d("show dialog")
     }
 
     override fun onBackPressed() {
