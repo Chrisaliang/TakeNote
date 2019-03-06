@@ -10,7 +10,8 @@ public class EventListRepositoryImpl implements EventListRepository {
     @Override
     public List<DMEventListItem> queryEventList() {
         ArrayList<DMEventListItem> dmEventListItems = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        // TODO: 2019/3/6  查询数据库中事件
+        for (int i = 0; i < 20; i++) {
             dmEventListItems.add(new DMEventListItem());
         }
         return dmEventListItems;
