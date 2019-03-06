@@ -1,5 +1,6 @@
 package com.chris.eban;
 
+import com.chris.eban.presenter.CreateEventActivity;
 import com.chris.eban.presenter.MainActivity;
 import com.chris.eban.presenter.event.EventListFragment;
 
@@ -12,6 +13,9 @@ abstract class AndroidComponentModule {
 
     @ContributesAndroidInjector
     public abstract MainActivity mainActivity();
+
+    @ContributesAndroidInjector
+    public abstract CreateEventActivity createEventActivity();
 
 
     //----------------  fragment   -----------------

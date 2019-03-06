@@ -1,6 +1,7 @@
 package com.chris.eban.presenter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commitNow()
 
         fab.setOnClickListener {
-            showAddLog()
+            //            showAddLog()
+            createNewEvent()
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -43,6 +45,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
     }
 
+    private fun createNewEvent() {
+        val intent = Intent(this, CreateEventActivity::class.java)
+        startActivity(intent)
+    }
+
+    @Suppress("unused")
     @SuppressLint("InflateParams")
     private fun showAddLog() {
         val newEvent = LayoutInflater.from(this)
