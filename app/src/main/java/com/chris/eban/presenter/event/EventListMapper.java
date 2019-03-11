@@ -16,7 +16,8 @@ class EventListMapper {
 
     private EventItem map(DMEventListItem dmEventListItem) {
         EventItem eventItem = new EventItem();
-        // TODO: 2019/1/28 转换
+        eventItem.title = dmEventListItem.title;
+        eventItem.content = dmEventListItem.content;
         return eventItem;
     }
 }

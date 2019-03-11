@@ -15,6 +15,7 @@ import timber.log.Timber;
 public class EventListViewModel extends ViewModel implements SingleObserver<Result<List<DMEventListItem>>> {
 
     private static final String TAG = "EventListViewModel";
+
     public final MutableLiveData<Boolean> hasData = new MutableLiveData<>();
     private final MutableLiveData<List<EventItem>> eventList = new MutableLiveData<>();
     private EventListQuery listQuery;
