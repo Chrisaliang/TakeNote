@@ -25,4 +25,10 @@ public class EventListRepositoryImpl implements EventListRepository {
         Timber.tag(TAG).d("events size:%d", events.size());
         return mapper.map(events);
     }
+
+    @Override
+    public boolean saveEvent(DMEventListItem item) {
+        long insertEvent = eventDao.insertEvent(mapper.map(item));
+        return insertEvent > 0;
+    }
 }

@@ -20,4 +20,11 @@ class EventMapper {
         dmEventListItem.content = event.content;
         return dmEventListItem;
     }
+
+     Event map(DMEventListItem item) {
+        Event event = new Event();
+        event.content = item.content;
+        event.title = item.title;
+        return event;
+    }
 }

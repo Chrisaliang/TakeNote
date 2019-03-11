@@ -5,7 +5,7 @@ import com.chris.eban.domain.entity.DMEventListItem;
 import java.util.ArrayList;
 import java.util.List;
 
-class EventListMapper {
+public class EventListMapper {
     List<EventItem> map(List<DMEventListItem> content) {
         ArrayList<EventItem> eventItems = new ArrayList<>();
         for (int i = 0; i < content.size(); i++) {
@@ -19,5 +19,12 @@ class EventListMapper {
         eventItem.title = dmEventListItem.title;
         eventItem.content = dmEventListItem.content;
         return eventItem;
+    }
+
+    public DMEventListItem map(EventItem item) {
+        DMEventListItem dmEventListItem = new DMEventListItem();
+        dmEventListItem.content = item.content;
+        dmEventListItem.title = item.title;
+        return dmEventListItem;
     }
 }

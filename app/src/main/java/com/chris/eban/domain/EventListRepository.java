@@ -12,4 +12,10 @@ public interface EventListRepository {
      */
     List<DMEventListItem> queryEventList();
 
+    /**
+     * 存储一条事件条目
+     * @param item 事件
+     */
+    boolean saveEvent(DMEventListItem item);
+
 }

@@ -25,7 +25,7 @@ public class EventListQuery extends SingleUseCase<List<DMEventListItem>> {
         return Single.just(repository)
                 .map(new Function<EventListRepository, List<DMEventListItem>>() {
                     @Override
-                    public List<DMEventListItem> apply(EventListRepository eventListRepository) {
+                    public List<DMEventListItem> apply(EventListRepository repository) {
                         return repository.queryEventList();
                     }
                 })
