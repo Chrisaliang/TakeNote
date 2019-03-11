@@ -1,5 +1,6 @@
 package com.chris.eban;
 
+import com.chris.eban.data.EventDao;
 import com.chris.eban.data.EventListRepositoryImpl;
 import com.chris.eban.domain.EventListRepository;
 
@@ -13,7 +14,7 @@ abstract class RepositoryModule {
 
     @Provides
     @Singleton
-    static EventListRepository provideEventListRepository() {
-        return new EventListRepositoryImpl();
+    static EventListRepository provideEventListRepository(EventDao eventDao) {
+        return new EventListRepositoryImpl(eventDao);
     }
 }

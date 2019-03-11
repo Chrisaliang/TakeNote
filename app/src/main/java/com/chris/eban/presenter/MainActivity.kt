@@ -14,11 +14,12 @@ import androidx.core.view.GravityCompat
 import com.chris.eban.R
 import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val TAG: String = "MainActivity"
 

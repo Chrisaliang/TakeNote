@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:text="@string/eban_empty"
             android:textSize="24sp"
-            app:isGone="@{event.hasData}"
+            app:isGone="@{safeUnbox(event.hasData)}"
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView

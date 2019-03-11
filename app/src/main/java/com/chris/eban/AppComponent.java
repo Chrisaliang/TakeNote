@@ -14,7 +14,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ViewModelModule.class,
         UseCaseModule.class,
         SchedulerModule.class,
-        NetModule.class,
+        PersistentModule.class,
         RepositoryModule.class,
         JsonModule.class
 })

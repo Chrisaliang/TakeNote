@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventListRepositoryImpl implements EventListRepository {
+
+    private final EventDao eventDao;
+
+    public EventListRepositoryImpl(EventDao eventDao) {
+        this.eventDao = eventDao;
+    }
+
     @Override
     public List<DMEventListItem> queryEventList() {
         ArrayList<DMEventListItem> dmEventListItems = new ArrayList<>();
