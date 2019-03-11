@@ -1,6 +1,5 @@
 package com.chris.eban;
 
-
 import com.chris.eban.data.AppDatabase;
 import com.chris.eban.data.EventDao;
 
