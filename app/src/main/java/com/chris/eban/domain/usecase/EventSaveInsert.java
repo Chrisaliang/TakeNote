@@ -10,9 +10,9 @@ import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import timber.log.Timber;
 
-public class EventSave extends SingleUseCase<Boolean> {
+public class EventSaveInsert extends SingleUseCase<Boolean> {
 
-    private static final String TAG = "EventSave";
+    private static final String TAG = "EventSaveInsert";
 
     private final EventListMapper mapper;
     private JobThread jobThread;
@@ -25,7 +25,7 @@ public class EventSave extends SingleUseCase<Boolean> {
     // TODO: 2019/3/11 改用domain层数据对象
     private EventItem item;
 
-    public EventSave(JobThread jobThread, EventListRepository repository) {
+    public EventSaveInsert(JobThread jobThread, EventListRepository repository) {
         this.jobThread = jobThread;
         this.repository = repository;
         mapper = new EventListMapper();

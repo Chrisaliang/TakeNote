@@ -1,6 +1,7 @@
 package com.chris.eban.presenter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,19 +10,15 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.chris.eban.R
 import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import timber.log.Timber
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private val TAG: String = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +43,22 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         nav_view.setNavigationItemSelectedListener(this)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_CREATE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // todo: notify fragment to update the event list
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // show notify toast
+                Toast.makeText(this, R.string.event_create_save_empty, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     private fun createNewEvent() {
         val intent = Intent(this, CreateEventActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, REQUEST_CODE_CREATE)
     }
 
     @Suppress("unused")
@@ -115,5 +125,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    companion object {
+        private const val REQUEST_CODE_CREATE: Int = 0x0001
+        private const val TAG: String = "MainActivity"
     }
 }

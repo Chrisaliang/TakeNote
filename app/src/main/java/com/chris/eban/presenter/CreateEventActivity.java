@@ -14,8 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import timber.log.Timber;
 
 import com.chris.eban.databinding.ActivityCreateEventBinding;
-import com.chris.eban.domain.EventListRepository;
-import com.chris.eban.domain.usecase.EventSave;
+import com.chris.eban.domain.usecase.EventSaveInsert;
 import com.chris.eban.presenter.event.EventItem;
 
 import javax.inject.Inject;
@@ -25,7 +24,7 @@ public class CreateEventActivity extends BaseActivity {
     private static final String TAG = "CreateEventActivity";
 
     @Inject
-    EventSave eventSave;
+    EventSaveInsert eventSaveInsert;
 
     private ActivityCreateEventBinding binding;
 
@@ -56,7 +55,7 @@ public class CreateEventActivity extends BaseActivity {
         Editable content = binding.etContent.getText();
 
         if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
-            Toast.makeText(this, R.string.event_create_save_empty, Toast.LENGTH_LONG).show();
+            setResult(RESULT_CANCELED);
             finish();
         } else {
             Timber.tag(TAG).d("\nEventTitle:%s \nEventContent:%s", title, content);
@@ -66,10 +65,12 @@ public class CreateEventActivity extends BaseActivity {
 
             EventItem eventItem = new EventItem();
 
-            eventSave.setItem(eventItem);
+            eventSaveInsert.setItem(eventItem);
 
-            eventSave.execute().subscribe();
+            eventSaveInsert.execute().subscribe();
 
+
+            setResult(RESULT_OK);
         }
     }
 }
