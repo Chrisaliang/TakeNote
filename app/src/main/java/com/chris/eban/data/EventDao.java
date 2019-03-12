@@ -11,7 +11,7 @@ import androidx.room.Query;
 public abstract class EventDao {
 
     /*************** 查询 ***************/
-    @Query("select * from " + Tables.EVENT.TABLE_NAME)
+    @Query("select * from " + Tables.EVENT.TABLE_NAME + " order by id desc")
     public abstract List<Event> queryEventList();
 
 

@@ -1,15 +1,16 @@
 package com.chris.eban.presenter.event;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.chris.eban.R;
+import com.chris.eban.databinding.ItemEventListBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventListViewHolder> {
@@ -23,9 +24,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     @NonNull
     @Override
     public EventListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_event_list, parent, false);
-        return new EventListViewHolder(view);
+        ItemEventListBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()),
+                R.layout.item_event_list, parent, false);
+        return new EventListViewHolder(binding);
     }
 
     @Override
@@ -45,14 +47,15 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     }
 
     class EventListViewHolder extends RecyclerView.ViewHolder {
-        private EventItem item;
+        private ItemEventListBinding binding;
 
-        EventListViewHolder(@NonNull View itemView) {
-            super(itemView);
+        EventListViewHolder(ItemEventListBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         void bind(EventItem eventItem) {
-            this.item = eventItem;
+            binding.setItem(eventItem);
         }
     }
 }
