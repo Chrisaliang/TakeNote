@@ -143,7 +143,12 @@ public class EventDetailActivity extends BaseActivity {
         Editable content = binding.etContent.getText();
 
         if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
-            setResult(fromSave ? RESULT_CANCELED : RESULT_OK);
+            if (fromSave) {
+                setResult(RESULT_CANCELED);
+            } else {
+                setResult(RESULT_OK);
+            }
+//            setResult(fromSave ? RESULT_CANCELED : RESULT_OK);
             finish();
         } else {
             Timber.tag(TAG).d("\nEventTitle:%s \nEventContent:%s", title, content);
