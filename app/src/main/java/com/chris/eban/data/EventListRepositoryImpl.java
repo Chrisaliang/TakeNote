@@ -28,7 +28,9 @@ public class EventListRepositoryImpl implements EventListRepository {
 
     @Override
     public boolean saveEvent(DMEventListItem item) {
-        long insertEvent = eventDao.insertEvent(mapper.map(item));
+        Event event = mapper.map(item);
+        Timber.tag(TAG).d("insert event: %s", event);
+        long insertEvent = eventDao.insertEvent(event);
         Timber.tag(TAG).d("insert id: %d", insertEvent);
         return insertEvent >= 0;
     }

@@ -14,7 +14,7 @@ import static com.chris.eban.data.Tables.EVENT.TABLE_NAME;
 @Entity(tableName = TABLE_NAME)
 class Event {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @Expose(serialize = false, deserialize = false)
     public long id;
 

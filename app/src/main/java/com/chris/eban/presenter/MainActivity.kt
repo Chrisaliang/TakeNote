@@ -57,7 +57,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun createNewEvent() {
-        val intent = Intent(this, CreateEventActivity::class.java)
+        val intent = Intent(this, EventDetailActivity::class.java)
         startActivityForResult(intent, REQUEST_CODE_CREATE)
     }
 
