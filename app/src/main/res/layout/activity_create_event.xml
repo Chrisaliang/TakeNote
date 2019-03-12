@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.EventDetailActivity">
+        tools:context=".presenter.event.EventDetailActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"

@@ -12,6 +12,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import com.chris.eban.R
+import com.chris.eban.presenter.event.EventDetailActivity
+import com.chris.eban.presenter.event.EventDetailActivity.PAGE_STATUS
+import com.chris.eban.presenter.event.EventDetailActivity.PAGE_STATUS_EDIT
 import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -51,13 +54,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 // todo: notify fragment to update the event list
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 // show notify toast
-                Toast.makeText(this, R.string.event_create_save_empty, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.event_create_save_empty, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun createNewEvent() {
         val intent = Intent(this, EventDetailActivity::class.java)
+        intent.putExtra(PAGE_STATUS, PAGE_STATUS_EDIT)
         startActivityForResult(intent, REQUEST_CODE_CREATE)
     }
 

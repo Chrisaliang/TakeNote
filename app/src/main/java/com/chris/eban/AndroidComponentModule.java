@@ -1,7 +1,7 @@
 package com.chris.eban;
 
-import com.chris.eban.presenter.EventDetailActivity;
 import com.chris.eban.presenter.MainActivity;
+import com.chris.eban.presenter.event.EventDetailActivity;
 import com.chris.eban.presenter.event.EventListFragment;
 
 import dagger.Module;

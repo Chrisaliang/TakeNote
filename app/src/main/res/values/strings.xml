@@ -12,4 +12,8 @@
     <string name="main_event_event_content">Content</string>
     <string name="action_create_save">Save</string>
     <string name="event_create_save_empty">Nothing to save.eBan discarded</string>
+    <string name="event_menu_item_favorite">favorite</string>
+    <string name="event_menu_item_share">share</string>
+    <string name="event_menu_item_edit">edit</string>
+    <string name="event_menu_item_delete">delete</string>
 </resources>
