@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -29,9 +29,9 @@ task clean(type: Delete) {
 
 ext {
     retrofit2 = '2.4.0'
-    dagger2 = '2.15'
-    room = '1.1.0'
-    okhttp = '3.10.0'
+    dagger2 = '2.17'
+    room = '1.1.1'
+    okhttp = '3.14.0'
     guava = '25.0'
     multdex = '1.0.3'
     navigationVersion = "1.0.0"
