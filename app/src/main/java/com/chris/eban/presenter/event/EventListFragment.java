@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
-@SuppressWarnings("WeakerAccess")
 public class EventListFragment extends BaseFragment {
 
     private static final String TAG = "EventListFragment";
