@@ -58,6 +58,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         notifyItemInserted(0);
     }
 
+     EventItem removeItem(int position) {
+        notifyItemRemoved(position);
+         return data.remove(position);
+     }
+
     class EventListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ItemEventListBinding binding;
         private EventItem item;

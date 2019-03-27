@@ -5,6 +5,7 @@ import com.chris.eban.domain.entity.DMEventListItem;
 import com.chris.eban.domain.usecase.EventListQuery;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -70,5 +71,13 @@ public class EventListViewModel extends ViewModel implements SingleObserver<Resu
 
     MutableLiveData<List<EventItem>> getEventList() {
         return eventList;
+    }
+
+    void query() {
+        init();
+    }
+
+    void removeItem(EventItem item) {
+        Objects.requireNonNull(eventList.getValue()).remove(item);
     }
 }

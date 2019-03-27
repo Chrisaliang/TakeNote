@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.chris.eban.BR;
 import com.chris.eban.R;
 import com.chris.eban.databinding.FragmentEventListBinding;
 import com.chris.eban.presenter.BaseFragment;
@@ -33,6 +33,7 @@ public class EventListFragment extends BaseFragment {
     @Inject
     ViewModelProvider.Factory factory;
     private EventListAdapter eventListAdapter;
+    private EventListViewModel viewModel;
 
     @Nullable
     @Override
@@ -46,7 +47,7 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        EventListViewModel viewModel = ViewModelProviders.of(this, factory).get(EventListViewModel.class);
+        viewModel = ViewModelProviders.of(this, factory).get(EventListViewModel.class);
         Timber.tag(TAG).d("onActivityCreated: %s", viewModel);
         binding.setEvent(viewModel);
 
@@ -63,31 +64,47 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-            @Override
-            public int getMovementFlags(@NonNull RecyclerView recyclerView,
-                                        @NonNull RecyclerView.ViewHolder viewHolder) {
-                return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-            }
-
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView,
-                                  @NonNull RecyclerView.ViewHolder viewHolder,
-                                  @NonNull RecyclerView.ViewHolder target) {
-                return true;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            }
-        });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallBack());
         itemTouchHelper.attachToRecyclerView(binding.listEvent);
         eventListAdapter = new EventListAdapter();
         binding.listEvent.setLayoutManager(new LinearLayoutManager(view.getContext()));
         binding.listEvent.addItemDecoration(
                 new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
         binding.listEvent.setAdapter(eventListAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.query();
+    }
+
+    class ItemTouchHelperCallBack extends ItemTouchHelper.Callback {
+
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView,
+                                    @NonNull RecyclerView.ViewHolder viewHolder) {
+            return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                    ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        }
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView,
+                              @NonNull RecyclerView.ViewHolder viewHolder,
+                              @NonNull RecyclerView.ViewHolder target) {
+            return true;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            if (direction == ItemTouchHelper.LEFT) {
+                Toast.makeText(binding.getRoot().getContext(), "to left", Toast.LENGTH_SHORT).show();
+                EventItem item = eventListAdapter.removeItem(viewHolder.getAdapterPosition());
+                Timber.tag(TAG).d("item :%s is removed", item);
+                viewModel.removeItem(item);
+            } else {
+                Toast.makeText(binding.getRoot().getContext(), "to right", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
