@@ -53,6 +53,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         notifyDataSetChanged();
     }
 
+    void insertFirst(EventItem item) {
+        data.add(0, item);
+        notifyItemInserted(0);
+    }
+
     class EventListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ItemEventListBinding binding;
         private EventItem item;

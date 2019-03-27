@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.chris.eban.R;
 import com.chris.eban.databinding.ActivityCreateEventBinding;
+import com.chris.eban.domain.Result;
 import com.chris.eban.domain.usecase.EventSaveInsert;
 import com.chris.eban.presenter.BaseActivity;
 
@@ -23,6 +24,8 @@ import javax.inject.Inject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class EventDetailActivity extends BaseActivity {
@@ -161,7 +164,22 @@ public class EventDetailActivity extends BaseActivity {
 //            eventItem.content = content.toString();
             eventSaveInsert.setItem(eventItem);
 
-            eventSaveInsert.execute().subscribe();
+            eventSaveInsert.execute().subscribe(new SingleObserver<Result<Boolean>>() {
+                @Override
+                public void onSubscribe(Disposable disposable) {
+
+                }
+
+                @Override
+                public void onSuccess(Result<Boolean> booleanResult) {
+
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+
+                }
+            });
 
 
             setResult(RESULT_OK);
