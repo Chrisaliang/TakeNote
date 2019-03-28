@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.chris.eban.R;
 import com.chris.eban.databinding.ActivityCreateEventBinding;
-import com.chris.eban.domain.Result;
-import com.chris.eban.domain.usecase.EventSaveInsert;
 import com.chris.eban.presenter.BaseActivity;
 
 import java.util.Objects;
@@ -24,8 +22,8 @@ import javax.inject.Inject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
 public class EventDetailActivity extends BaseActivity {
@@ -39,14 +37,17 @@ public class EventDetailActivity extends BaseActivity {
 
     private String status;
     @Inject
-    EventSaveInsert eventSaveInsert;
+    ViewModelProvider.Factory factory;
+    private boolean saved = false;
 
     private ActivityCreateEventBinding binding;
+    private EventDetailViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_event);
+        binding.setLifecycleOwner(this);
         setSupportActionBar(binding.toolbar2);
 
         setStatusBarTextColor(getWindow(), true);
@@ -57,31 +58,14 @@ public class EventDetailActivity extends BaseActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
+        viewModel = ViewModelProviders.of(this, factory).get(EventDetailViewModel.class);
         // 判断启动方式，切换编辑状态
         Intent intent = getIntent();
         status = intent.getStringExtra(PAGE_STATUS);
         Timber.tag(TAG).d("page start status: %s", status);
-        switch (status) {
-            case PAGE_STATUS_EDIT:
-                showEditStatus();
-                break;
-            case PAGE_STATUS_SAVE:
-                showSaveStatus(intent);
-                break;
-        }
-    }
-
-    private void showEditStatus() {
-
-    }
-
-    private void showSaveStatus(Intent intent) {
         EventItem item = Objects.requireNonNull(intent.getExtras()).getParcelable(PAGE_ITEM);
-        if (item != null) {
-            binding.etTitle.setText(item.title);
-            binding.etContent.setText(item.content);
-        }
-
+        viewModel.setItem(item);
+        binding.setDetail(viewModel);
     }
 
     @Override
@@ -129,29 +113,13 @@ public class EventDetailActivity extends BaseActivity {
         decor.setSystemUiVisibility(ui);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-//        Toast.makeText(this, "onBackPressed", Toast.LENGTH_SHORT).show();
-        saveEvent(false);
-    }
-
     private void saveEvent() {
-        saveEvent(true);
-    }
-
-    private void saveEvent(boolean fromSave) {
 
         Editable title = binding.etTitle.getText();
         Editable content = binding.etContent.getText();
 
         if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
-            if (fromSave) {
-                setResult(RESULT_CANCELED);
-            } else {
-                setResult(RESULT_OK);
-            }
-//            setResult(fromSave ? RESULT_CANCELED : RESULT_OK);
+            setResult(RESULT_CANCELED);
             finish();
         } else {
             Timber.tag(TAG).d("\nEventTitle:%s \nEventContent:%s", title, content);
@@ -160,28 +128,8 @@ public class EventDetailActivity extends BaseActivity {
             Toast.makeText(this, title + ": " + content, Toast.LENGTH_LONG).show();
 
             EventItem eventItem = new EventItem(title.toString(), content.toString());
-//            eventItem.title = title.toString();
-//            eventItem.content = content.toString();
-            eventSaveInsert.setItem(eventItem);
-
-            eventSaveInsert.execute().subscribe(new SingleObserver<Result<Boolean>>() {
-                @Override
-                public void onSubscribe(Disposable disposable) {
-
-                }
-
-                @Override
-                public void onSuccess(Result<Boolean> booleanResult) {
-
-                }
-
-                @Override
-                public void onError(Throwable throwable) {
-
-                }
-            });
-
-
+            viewModel.setItem(eventItem);
+            viewModel.saveEvent();
             setResult(RESULT_OK);
         }
     }
