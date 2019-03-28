@@ -31,7 +31,6 @@ public class EventDetailActivity extends BaseActivity {
     public static final String PAGE_ITEM = "com.chris.eban.presenter.event.EventDetailActivity.pageItem";
     public static final String PAGE_STATUS_EDIT = "edit"; // 编辑状态
     public static final String PAGE_STATUS_SAVE = "save"; // 保存状态
-
     private static final String TAG = "EventDetailActivity";
 
     private String status;
