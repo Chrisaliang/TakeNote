@@ -1,35 +1,187 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
 
 android {
+
     compileSdkVersion 28
+
     defaultConfig {
-        applicationId "com.chris.takenote"
+        applicationId "com.chris.eban"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+//        multdex true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../debug.keystore")
+            keyAlias 'AndroidDebugKey'
+        }
+
+        release {
+            keyAlias releaseKeyAlias
+            keyPassword releaseKeyPassword
+            storeFile file('../chrisaliang.keystore')
+            storePassword releaseKeyStorePassword
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include "x86", "armeabi-v7a"
+            universalApk false
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    sourceSets {
+
+        main {
+            res.srcDirs += [
+                    'src/main/res_main'
+            ]
+        }
+
+        tst {
+            java.srcDirs += [
+                    'src/http/java'
+            ]
+        }
+    }
+
+    flavorDimensions("backend")
+    productFlavors {
+
+        mock {
+            dimension = 'backend'
+            manifestPlaceholders = [
+                    'AMAP'        : 'b672626a9ee72987e9cdc2b4461a50f5',
+                    'APUSH_KEY'   : '24675829',
+                    'APUSH_SECRET': '90868e4d9196667a14104da09ef9c053'
+            ]
+//            signingConfig signingConfig.debug
+        }
+
+        tst {
+            dimension = 'backend'
+//            signingConfig signingConfig.debug
+        }
+
+    }
+
 }
 
+// map for the version code that gives each ABI a value.
+ext.abiCodes = ['armeabi-v7a': 1, x86: 3]
+
+// For per-density APKs, create a similar map like this:
+// ext.densityCodes  ['mdpi': 1, 'hdpi':2, 'xhdpi': 3]
+
+import com.android.build.OutputFile
+
+// For each APK output variant, override versionCode with a combination of
+// ext.abiCodes * 1000 + variant.versionCode. In this example, variant.versionCode
+// is equal to defaultConfig.versionCode. If you configure product flavor that
+// define their own versionCode, variant.versionCode uses that value instead.
+android.applicationVariants.all {
+    variant ->
+        // Assigns a different version code for each ouput APK
+        // other_oil_cost than the universal APK.
+        variant.outputs.each { output ->
+            // Stores the value of ext.abiCodes that is associated with the ABI for this variant.
+            def baseAbiVersionCode =
+                    // Determines the ABI for this variant and returns the mapped value.
+                    project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+            // Because abiCodes.get() returns null for ABIs that are not mapped by ext.abiCodes,
+            // the following code does not override the version code for universal APKs.
+            if (baseAbiVersionCode != null) {
+                output.versionCodeOverride =
+                        baseAbiVersionCode * 1000 + variant.versionCode
+            }
+        }
+
+        variant.outputs.all {
+            outputFileName = outputFileName.replace(".apk", "-" + variant.versionName + "-build-" + releaseTime() + ".apk")
+        }
+}
+
+//kapt {
+//    generateStubs true
+//}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
-    implementation 'com.google.android.material:material:1.0.0-alpha1'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha03'
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0-alpha03"
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'com.github.akarnokd:rxjava2-extensions:0.19.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    implementation 'com.squareup.retrofit2:retrofit:' + retrofit2
+    implementation 'com.squareup.retrofit2:converter-gson:' + retrofit2
+
+    implementation 'com.google.dagger:dagger-android:' + dagger2
+    implementation 'com.google.dagger:dagger-android-support:' + dagger2
+    //    implementation 'com.google.dagger:dagger:' + dagger2
+    //    kapt "com.google.dagger:dagger-android-processor:$dagger2"
+    //    kapt 'com.google.dagger:dagger-compiler:' + dagger2
+    annotationProcessor 'com.google.dagger:dagger-android-processor:' + dagger2
+    annotationProcessor 'com.google.dagger:dagger-compiler:' + dagger2
+
+//    kapt "com.android.databinding:compiler:3.1.3"
+//    kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha03'
+    implementation "android.arch.persistence.room:runtime:" + room
+    implementation 'android.arch.persistence.room:rxjava2:' + room
+    annotationProcessor "android.arch.persistence.room:compiler:" + room
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+
+//    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'com.google.ar:core:1.7.0'
 }

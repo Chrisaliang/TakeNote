@@ -1,4 +1,4 @@
-package com.chris.takenote
+package com.chris.eban
 
 import org.junit.Test
 
