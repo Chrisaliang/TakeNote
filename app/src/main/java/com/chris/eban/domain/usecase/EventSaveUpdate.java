@@ -37,7 +37,8 @@ public class EventSaveUpdate extends SingleUseCase<Boolean> {
                 .map(new Function<EventListRepository, Boolean>() {
                     @Override
                     public Boolean apply(EventListRepository repository) {
-                        return repository.updateEvent(mapper.map(item));
+//                        return repository.updateEvent(mapper.map(item));
+                        return null;
                     }
                 })
                 .subscribeOn(jobThread.provideWorker())

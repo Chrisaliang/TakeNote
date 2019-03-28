@@ -6,7 +6,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 @Dao
 public abstract class EventDao {
@@ -20,6 +19,6 @@ public abstract class EventDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract long insertEvent(Event event);
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    public abstract long updateEvent(Event event);
+//    @Update(onConflict = OnConflictStrategy.REPLACE)
+//    public abstract long updateEvent(Event event);
 }

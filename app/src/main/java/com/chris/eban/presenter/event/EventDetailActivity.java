@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.chris.eban.R;
-import com.chris.eban.databinding.ActivityCreateEventBinding;
+import com.chris.eban.databinding.ActivityEventDetailBinding;
 import com.chris.eban.presenter.BaseActivity;
 
 import java.util.Objects;
@@ -39,13 +39,13 @@ public class EventDetailActivity extends BaseActivity {
 
     private boolean saved = false;
 
-    private ActivityCreateEventBinding binding;
+    private ActivityEventDetailBinding binding;
     private EventDetailViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_event);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
         binding.setLifecycleOwner(this);
         setSupportActionBar(binding.toolbar2);
 
