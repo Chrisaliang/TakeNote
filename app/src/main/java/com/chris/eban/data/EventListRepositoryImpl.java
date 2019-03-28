@@ -34,4 +34,12 @@ public class EventListRepositoryImpl implements EventListRepository {
         Timber.tag(TAG).d("insert id: %d", insertEvent);
         return insertEvent >= 0;
     }
+
+    @Override
+    public boolean updateEvent(DMEventListItem item) {
+        Event event = mapper.map(item);
+        long updateEvent = eventDao.updateEvent(event);
+        Timber.tag(TAG).d("update event: %s", event);
+        return updateEvent > 0;
+    }
 }

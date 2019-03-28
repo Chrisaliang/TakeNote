@@ -16,6 +16,7 @@ class EventMapper {
 
     private DMEventListItem map(Event event) {
         DMEventListItem dmEventListItem = new DMEventListItem();
+        dmEventListItem.id = event.id;
         dmEventListItem.title = event.title;
         dmEventListItem.content = event.content;
         return dmEventListItem;
@@ -23,6 +24,7 @@ class EventMapper {
 
      Event map(DMEventListItem item) {
         Event event = new Event();
+        event.id = item.id;
         event.content = item.content;
         event.title = item.title;
         return event;

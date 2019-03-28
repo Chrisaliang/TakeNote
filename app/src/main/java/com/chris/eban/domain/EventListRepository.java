@@ -18,4 +18,10 @@ public interface EventListRepository {
      */
     boolean saveEvent(DMEventListItem item);
 
+    /**
+     * 更新一条记录
+     * @param item 记录
+     */
+    boolean updateEvent(DMEventListItem item);
+
 }

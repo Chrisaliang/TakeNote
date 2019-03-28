@@ -20,6 +20,7 @@ public class EventListMapper {
 
     public DMEventListItem map(EventItem item) {
         DMEventListItem dmEventListItem = new DMEventListItem();
+        dmEventListItem.id = item.id;
         dmEventListItem.content = item.content;
         dmEventListItem.title = item.title;
         return dmEventListItem;

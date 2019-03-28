@@ -12,9 +12,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.chris.eban.R;
-import com.chris.eban.databinding.ActivityCreateEventBinding;
-import com.chris.eban.domain.Result;
-import com.chris.eban.domain.usecase.EventSaveInsert;
+import com.chris.eban.databinding.ActivityEventDetailBinding;
 import com.chris.eban.presenter.BaseActivity;
 
 import java.util.Objects;
@@ -24,8 +22,8 @@ import javax.inject.Inject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
 public class EventDetailActivity extends BaseActivity {
@@ -34,19 +32,19 @@ public class EventDetailActivity extends BaseActivity {
     public static final String PAGE_ITEM = "com.chris.eban.presenter.event.EventDetailActivity.pageItem";
     public static final String PAGE_STATUS_EDIT = "edit"; // 编辑状态
     public static final String PAGE_STATUS_SAVE = "save"; // 保存状态
-
     private static final String TAG = "EventDetailActivity";
-
-    private String status;
+    private boolean saved = false;
     @Inject
-    EventSaveInsert eventSaveInsert;
-
-    private ActivityCreateEventBinding binding;
+    ViewModelProvider.Factory factory;
+    private String status;
+    private ActivityEventDetailBinding binding;
+    private EventDetailViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_event);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
+        binding.setLifecycleOwner(this);
         setSupportActionBar(binding.toolbar2);
 
         setStatusBarTextColor(getWindow(), true);
@@ -56,6 +54,9 @@ public class EventDetailActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
+
+        viewModel = ViewModelProviders.of(this, factory).get(EventDetailViewModel.class);
+        binding.setEventDetail(viewModel);
 
         // 判断启动方式，切换编辑状态
         Intent intent = getIntent();
@@ -106,11 +107,19 @@ public class EventDetailActivity extends BaseActivity {
             case R.id.action_create_save:
                 saveEvent();
                 return true;
+            case R.id.action_save_edit:
+                editContent();
+                return true;
             case android.R.id.home:
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void editContent() {
+        int length = binding.etTitle.getText().length();
+        binding.etTitle.setSelection(length);
     }
 
 
@@ -133,7 +142,12 @@ public class EventDetailActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
 //        Toast.makeText(this, "onBackPressed", Toast.LENGTH_SHORT).show();
-        saveEvent(false);
+        if (!saved) {
+            saveEvent(false);
+        } else {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 
     private void saveEvent() {
@@ -141,6 +155,8 @@ public class EventDetailActivity extends BaseActivity {
     }
 
     private void saveEvent(boolean fromSave) {
+
+        saved = true;
 
         Editable title = binding.etTitle.getText();
         Editable content = binding.etContent.getText();
@@ -162,24 +178,7 @@ public class EventDetailActivity extends BaseActivity {
             EventItem eventItem = new EventItem(title.toString(), content.toString());
 //            eventItem.title = title.toString();
 //            eventItem.content = content.toString();
-            eventSaveInsert.setItem(eventItem);
-
-            eventSaveInsert.execute().subscribe(new SingleObserver<Result<Boolean>>() {
-                @Override
-                public void onSubscribe(Disposable disposable) {
-
-                }
-
-                @Override
-                public void onSuccess(Result<Boolean> booleanResult) {
-
-                }
-
-                @Override
-                public void onError(Throwable throwable) {
-
-                }
-            });
+            viewModel.saveEvent();
 
 
             setResult(RESULT_OK);
