@@ -14,7 +14,7 @@ public class EventListMapper {
         return eventItems;
     }
 
-    private EventItem map(DMEventListItem dmEventListItem) {
+    public EventItem map(DMEventListItem dmEventListItem) {
         return new EventItem(dmEventListItem.id, dmEventListItem.title, dmEventListItem.content);
     }
 

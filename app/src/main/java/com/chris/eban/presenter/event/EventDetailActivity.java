@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.chris.eban.R;
 import com.chris.eban.databinding.ActivityCreateEventBinding;
@@ -38,6 +37,7 @@ public class EventDetailActivity extends BaseActivity {
     private String status;
     @Inject
     ViewModelProvider.Factory factory;
+
     private boolean saved = false;
 
     private ActivityCreateEventBinding binding;
@@ -69,25 +69,41 @@ public class EventDetailActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        int menuRes = -1;
+    public boolean onPrepareOptionsMenu(Menu menu) {
         switch (status) {
             case PAGE_STATUS_EDIT:
-                menuRes = R.menu.create;
+                menu.findItem(R.id.action_event_save).setVisible(true);
+                menu.findItem(R.id.action_event_edit).setVisible(false);
+                menu.findItem(R.id.action_event_favorite).setVisible(false);
+                menu.findItem(R.id.action_event_share).setVisible(false);
+                menu.findItem(R.id.action_event_delete).setVisible(false);
                 break;
             case PAGE_STATUS_SAVE:
-                menuRes = R.menu.event_save;
+                menu.findItem(R.id.action_event_save).setVisible(false);
+                menu.findItem(R.id.action_event_edit).setVisible(true);
+                menu.findItem(R.id.action_event_favorite).setVisible(true);
+                menu.findItem(R.id.action_event_share).setVisible(true);
+                menu.findItem(R.id.action_event_delete).setVisible(true);
                 break;
         }
-        getMenuInflater().inflate(menuRes, menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void showToolBarMenu(String status) {
+
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.event_save, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_create_save:
+            case R.id.action_event_save:
                 saveEvent();
                 return true;
             case android.R.id.home:
@@ -115,6 +131,9 @@ public class EventDetailActivity extends BaseActivity {
 
     private void saveEvent() {
 
+        if (saved) return;
+        saved = true;
+
         Editable title = binding.etTitle.getText();
         Editable content = binding.etContent.getText();
 
@@ -123,10 +142,6 @@ public class EventDetailActivity extends BaseActivity {
             finish();
         } else {
             Timber.tag(TAG).d("\nEventTitle:%s \nEventContent:%s", title, content);
-            binding.etTitle.clearFocus();
-            binding.etContent.clearFocus();
-            Toast.makeText(this, title + ": " + content, Toast.LENGTH_LONG).show();
-
             EventItem eventItem = new EventItem(title.toString(), content.toString());
             viewModel.setItem(eventItem);
             viewModel.saveEvent();

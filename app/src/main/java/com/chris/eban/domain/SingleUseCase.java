@@ -6,8 +6,7 @@ import io.reactivex.functions.Function;
 /**
  * Single result emitter
  */
-public abstract class SingleUseCase<T>
-        implements Interactor<Single<Result<T>>> {
+public abstract class SingleUseCase<T> implements Interactor<Single<Result<T>>> {
 
 
     @Override
