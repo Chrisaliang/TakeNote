@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.chris.eban.R;
 import com.chris.eban.databinding.ActivityEventDetailBinding;
@@ -68,7 +69,7 @@ public class EventDetailActivity extends BaseActivity {
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            showImm(v);
+            showIme((EditText) v);
             return true;
         }
     };
@@ -138,33 +139,41 @@ public class EventDetailActivity extends BaseActivity {
                 saveEvent();
                 return true;
             case R.id.action_event_edit:
-                showImm();
+                showIme();
                 break;
             case android.R.id.home:
-                hideImm();
+                hideIme();
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void hideImm() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+    private void hideIme() {
+        if (imm == null)
+            imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.etTitle.getWindowToken(), 0);
+        binding.etContent.clearFocus();
+        binding.etTitle.clearFocus();
+        status = PAGE_STATUS_SAVE;
+        invalidateOptionsMenu();
     }
 
-    private void showImm() {
-        showImm(binding.etTitle);
+    private void showIme() {
+        showIme(binding.etTitle);
     }
 
-    private void showImm(View view) {
+    @SuppressLint("ClickableViewAccessibility")
+    private void showIme(EditText view) {
         if (imm == null)
             imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         if (imm != null) {
             view.requestFocus();
+            view.setSelection(view.getText().length());
             imm.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
             status = PAGE_STATUS_EDIT;
             invalidateOptionsMenu();
+            view.setOnTouchListener(null);
         }
     }
 
@@ -188,6 +197,7 @@ public class EventDetailActivity extends BaseActivity {
 
         if (saved) return;
         saved = true;
+        hideIme();
 
         Editable title = binding.etTitle.getText();
         Editable content = binding.etContent.getText();
@@ -197,8 +207,7 @@ public class EventDetailActivity extends BaseActivity {
             finish();
         } else {
             Timber.tag(TAG).d("\nEventTitle:%s \nEventContent:%s", title, content);
-            EventItem eventItem = new EventItem(title.toString(), content.toString());
-            viewModel.setItem(eventItem);
+            viewModel.setItem(title, content);
             viewModel.saveEvent();
             setResult(RESULT_OK);
         }

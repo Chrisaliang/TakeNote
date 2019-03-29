@@ -16,12 +16,13 @@ public interface EventListRepository {
      * 存储一条事件条目
      * @param item 事件
      */
-    boolean saveEvent(DMEventListItem item);
+    long saveEvent(DMEventListItem item);
 
-//    /**
-//     * 更新一条记录
-//     * @param item 记录
-//     */
-//    boolean updateEvent(DMEventListItem item);
+    /**
+     * 更新一条记录
+     *
+     * @param item 记录
+     */
+    long updateEvent(DMEventListItem item);
 
 }

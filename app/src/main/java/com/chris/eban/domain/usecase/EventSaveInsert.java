@@ -10,7 +10,7 @@ import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import timber.log.Timber;
 
-public class EventSaveInsert extends SingleUseCase<Boolean> {
+public class EventSaveInsert extends SingleUseCase<Long> {
 
     private static final String TAG = "EventSaveInsert";
 
@@ -32,11 +32,11 @@ public class EventSaveInsert extends SingleUseCase<Boolean> {
     }
 
     @Override
-    protected Single<Boolean> buildSingle() {
+    protected Single<Long> buildSingle() {
         return Single.just(repository)
-                .map(new Function<EventListRepository, Boolean>() {
+                .map(new Function<EventListRepository, Long>() {
                     @Override
-                    public Boolean apply(EventListRepository repository) {
+                    public Long apply(EventListRepository repository) {
                         Timber.tag(TAG).d("save a event:%s", item);
                         return repository.saveEvent(mapper.map(item));
                     }

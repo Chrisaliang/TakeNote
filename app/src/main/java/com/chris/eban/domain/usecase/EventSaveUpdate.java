@@ -9,7 +9,7 @@ import com.chris.eban.presenter.event.EventListMapper;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
-public class EventSaveUpdate extends SingleUseCase<Boolean> {
+public class EventSaveUpdate extends SingleUseCase<Long> {
 
 
     private static final String TAG = "EventSaveUpdate";
@@ -32,13 +32,12 @@ public class EventSaveUpdate extends SingleUseCase<Boolean> {
     }
 
     @Override
-    protected Single<Boolean> buildSingle() {
+    protected Single<Long> buildSingle() {
         return Single.just(repository)
-                .map(new Function<EventListRepository, Boolean>() {
+                .map(new Function<EventListRepository, Long>() {
                     @Override
-                    public Boolean apply(EventListRepository repository) {
-//                        return repository.updateEvent(mapper.map(item));
-                        return null;
+                    public Long apply(EventListRepository repository) {
+                        return repository.updateEvent(mapper.map(item));
                     }
                 })
                 .subscribeOn(jobThread.provideWorker())
