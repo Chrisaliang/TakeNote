@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -44,22 +43,6 @@ public class EventDetailActivity extends BaseActivity {
 
     private ActivityEventDetailBinding binding;
     private EventDetailViewModel viewModel;
-    private TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
 
     private InputMethodManager imm;
 
@@ -97,9 +80,7 @@ public class EventDetailActivity extends BaseActivity {
         binding.setDetail(viewModel);
 
         binding.etTitle.setOnTouchListener(touchListener);
-        binding.etTitle.addTextChangedListener(watcher);
         binding.etContent.setOnTouchListener(touchListener);
-        binding.etContent.addTextChangedListener(watcher);
     }
 
     @Override
