@@ -76,6 +76,7 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        // TODO: 2019/3/29 query the updated item
         viewModel.query();
     }
 

@@ -1,14 +1,18 @@
 package com.chris.eban.presenter.event;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 
 import com.chris.eban.R;
 import com.chris.eban.databinding.ActivityEventDetailBinding;
@@ -41,6 +45,33 @@ public class EventDetailActivity extends BaseActivity {
 
     private ActivityEventDetailBinding binding;
     private EventDetailViewModel viewModel;
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    private InputMethodManager imm;
+
+    private View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            showImm(v);
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,32 +96,33 @@ public class EventDetailActivity extends BaseActivity {
         EventItem item = Objects.requireNonNull(intent.getExtras()).getParcelable(PAGE_ITEM);
         viewModel.setItem(item);
         binding.setDetail(viewModel);
+
+        binding.etTitle.setOnTouchListener(touchListener);
+        binding.etTitle.addTextChangedListener(watcher);
+        binding.etContent.setOnTouchListener(touchListener);
+        binding.etContent.addTextChangedListener(watcher);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         switch (status) {
             case PAGE_STATUS_EDIT:
-                menu.findItem(R.id.action_event_save).setVisible(true);
-                menu.findItem(R.id.action_event_edit).setVisible(false);
-                menu.findItem(R.id.action_event_favorite).setVisible(false);
-                menu.findItem(R.id.action_event_share).setVisible(false);
-                menu.findItem(R.id.action_event_delete).setVisible(false);
+                showToolBarMenu(menu, true);
                 break;
             case PAGE_STATUS_SAVE:
-                menu.findItem(R.id.action_event_save).setVisible(false);
-                menu.findItem(R.id.action_event_edit).setVisible(true);
-                menu.findItem(R.id.action_event_favorite).setVisible(true);
-                menu.findItem(R.id.action_event_share).setVisible(true);
-                menu.findItem(R.id.action_event_delete).setVisible(true);
+                showToolBarMenu(menu, false);
                 break;
         }
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void showToolBarMenu(String status) {
+    private void showToolBarMenu(Menu menu, boolean toggle) {
 
-        invalidateOptionsMenu();
+        menu.findItem(R.id.action_event_save).setVisible(toggle);
+        menu.findItem(R.id.action_event_edit).setVisible(!toggle);
+        menu.findItem(R.id.action_event_favorite).setVisible(!toggle);
+        menu.findItem(R.id.action_event_share).setVisible(!toggle);
+        menu.findItem(R.id.action_event_delete).setVisible(!toggle);
     }
 
     @Override
@@ -105,11 +137,35 @@ public class EventDetailActivity extends BaseActivity {
             case R.id.action_event_save:
                 saveEvent();
                 return true;
+            case R.id.action_event_edit:
+                showImm();
+                break;
             case android.R.id.home:
+                hideImm();
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideImm() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.etTitle.getWindowToken(), 0);
+    }
+
+    private void showImm() {
+        showImm(binding.etTitle);
+    }
+
+    private void showImm(View view) {
+        if (imm == null)
+            imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            view.requestFocus();
+            imm.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
+            status = PAGE_STATUS_EDIT;
+            invalidateOptionsMenu();
+        }
     }
 
 

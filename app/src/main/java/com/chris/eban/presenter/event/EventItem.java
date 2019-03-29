@@ -15,26 +15,25 @@ public class EventItem implements Parcelable {
             return new EventItem[size];
         }
     };
+    public long id;
     public String title;
     public String content;
+
+    protected EventItem(Parcel in) {
+        id = in.readLong();
+        title = in.readString();
+        content = in.readString();
+    }
 
     public EventItem(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
-    public long id;
-
     public EventItem(long id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
-    }
-
-    protected EventItem(Parcel in) {
-        id = in.readLong();
-        title = in.readString();
-        content = in.readString();
     }
 
     @Override

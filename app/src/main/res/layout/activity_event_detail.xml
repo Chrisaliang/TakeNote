@@ -39,6 +39,8 @@
             android:layout_marginTop="16dp"
             android:background="@null"
             android:hint="@string/main_event_event_title"
+            android:imeOptions="actionNext"
+            android:inputType="text|number"
             android:maxLines="1"
             android:minEms="8"
             android:paddingStart="8dp"
@@ -46,7 +48,8 @@
             android:text="@{detail.item.title}"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar2" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar2"
+            tools:background="#9CE4E123" />
 
 
         <EditText
@@ -59,6 +62,8 @@
             android:background="@null"
             android:gravity="top|start"
             android:hint="@string/main_event_event_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="@{detail.item.content}"
