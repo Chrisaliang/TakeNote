@@ -3,6 +3,8 @@ package com.chris.eban.data;
 import com.chris.eban.domain.EventListRepository;
 import com.chris.eban.domain.entity.DMEventListItem;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import timber.log.Timber;
@@ -19,6 +21,7 @@ public class EventListRepositoryImpl implements EventListRepository {
         mapper = new EventMapper();
     }
 
+    @NotNull
     @Override
     public List<DMEventListItem> queryEventList() {
         List<Event> events = eventDao.queryEventList();
@@ -27,7 +30,7 @@ public class EventListRepositoryImpl implements EventListRepository {
     }
 
     @Override
-    public long saveEvent(DMEventListItem item) {
+    public long saveEvent(@NotNull DMEventListItem item) {
         Event event = mapper.map(item);
         Timber.tag(TAG).d("insert event: %s", event);
         long insertEvent = eventDao.insertEvent(event);
@@ -36,9 +39,18 @@ public class EventListRepositoryImpl implements EventListRepository {
     }
 
     @Override
-    public long updateEvent(DMEventListItem item) {
+    public long updateEvent(@NotNull DMEventListItem item) {
         Event event = mapper.map(item);
         eventDao.updateEvent(event);
+        Timber.tag(TAG).w("update item:%s", event);
         return item.id;
+    }
+
+    @Override
+    public long deleteEvent(@NotNull DMEventListItem item) {
+        Event event = mapper.map(item);
+        eventDao.deleteEvent(event);
+        Timber.tag(TAG).w("delete an event:%s", event);
+        return event.id;
     }
 }

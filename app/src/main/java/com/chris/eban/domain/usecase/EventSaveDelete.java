@@ -9,24 +9,21 @@ import com.chris.eban.presenter.event.EventListMapper;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
-public class EventSaveUpdate extends SingleUseCase<Long> {
-
+public class EventSaveDelete extends SingleUseCase<Long> {
 
     private final EventListMapper mapper;
     private JobThread jobThread;
     private EventListRepository repository;
-
-    // TODO: 2019/3/28 改用domain层数据对象
     private EventItem item;
 
-    public void setItem(EventItem item) {
-        this.item = item;
-    }
-
-    public EventSaveUpdate(JobThread jobThread, EventListRepository repository) {
+    public EventSaveDelete(JobThread jobThread, EventListRepository repository) {
         this.jobThread = jobThread;
         this.repository = repository;
         mapper = new EventListMapper();
+    }
+
+    public void setItem(EventItem item) {
+        this.item = item;
     }
 
     @Override
@@ -35,10 +32,11 @@ public class EventSaveUpdate extends SingleUseCase<Long> {
                 .map(new Function<EventListRepository, Long>() {
                     @Override
                     public Long apply(EventListRepository repository) {
-                        return repository.updateEvent(mapper.map(item));
+                        return repository.deleteEvent(mapper.map(item));
                     }
                 })
                 .subscribeOn(jobThread.provideWorker())
                 .observeOn(jobThread.provideUI());
     }
+
 }

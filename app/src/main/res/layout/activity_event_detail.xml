@@ -62,7 +62,6 @@
             android:background="@null"
             android:gravity="top|start"
             android:hint="@string/main_event_event_content"
-            android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"

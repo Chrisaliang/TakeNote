@@ -2,6 +2,7 @@ package com.chris.eban;
 
 import com.chris.eban.common.EBanViewModelProviderFactory;
 import com.chris.eban.domain.usecase.EventListQuery;
+import com.chris.eban.domain.usecase.EventSaveDelete;
 import com.chris.eban.domain.usecase.EventSaveInsert;
 import com.chris.eban.domain.usecase.EventSaveUpdate;
 
@@ -20,8 +21,9 @@ class ViewModelModule {
             (
                     EventListQuery eventListQuery,
                     EventSaveInsert eventSaveInsert,
-                    EventSaveUpdate eventSaveUpdate
+                    EventSaveUpdate eventSaveUpdate,
+                    EventSaveDelete eventSaveDelete
             ) {
-        return new EBanViewModelProviderFactory(eventListQuery, eventSaveInsert, eventSaveUpdate);
+        return new EBanViewModelProviderFactory(eventListQuery, eventSaveInsert, eventSaveUpdate, eventSaveDelete);
     }
 }

@@ -42,8 +42,6 @@ public class EventDetailActivity extends BaseActivity {
     @Inject
     ViewModelProvider.Factory factory;
 
-    private boolean saved = false;
-
     private ActivityEventDetailBinding binding;
     private EventDetailViewModel viewModel;
     private TextWatcher watcher = new TextWatcher() {
@@ -195,8 +193,6 @@ public class EventDetailActivity extends BaseActivity {
 
     private void saveEvent() {
 
-        if (saved) return;
-        saved = true;
         hideIme();
 
         Editable title = binding.etTitle.getText();

@@ -1,6 +1,9 @@
 package com.chris.eban.presenter.event;
 
+import android.text.TextUtils;
+
 import com.chris.eban.domain.Result;
+import com.chris.eban.domain.usecase.EventSaveDelete;
 import com.chris.eban.domain.usecase.EventSaveInsert;
 import com.chris.eban.domain.usecase.EventSaveUpdate;
 
@@ -17,15 +20,18 @@ public class EventDetailViewModel extends ViewModel implements SingleObserver<Re
     private static final String TAG = "EventDetailViewModel";
 
     public final MutableLiveData<EventItem> item = new MutableLiveData<>();
-    private EventItem newItem;
+    private boolean saved = false;
     private EventSaveInsert eventSaveInsert;
     private EventSaveUpdate eventSaveUpdate;
+    private EventSaveDelete eventSaveDelete;
     private Disposable disposable;
 
     public EventDetailViewModel(EventSaveInsert eventSaveInsert,
-                                EventSaveUpdate eventSaveUpdate) {
+                                EventSaveUpdate eventSaveUpdate,
+                                EventSaveDelete eventSaveDelete) {
         this.eventSaveInsert = eventSaveInsert;
         this.eventSaveUpdate = eventSaveUpdate;
+        this.eventSaveDelete = eventSaveDelete;
     }
 
     public void setItem(EventItem item) {
@@ -33,20 +39,29 @@ public class EventDetailViewModel extends ViewModel implements SingleObserver<Re
     }
 
     void setItem(CharSequence title, CharSequence content) {
-        // TODO: 2019/3/29 compare
-        newItem = new EventItem(title.toString(), content.toString());
+
+        EventItem newItem = new EventItem(title.toString(), content.toString());
 
         EventItem value = item.getValue();
-        if (value != null) {
-            value.title = title.toString();
-            value.content = content.toString();
+        if (value == null) {
+            value = newItem;
+            saved = false;
         } else {
-            value = new EventItem(title.toString(), content.toString());
+            if (!value.title.equals(newItem.title)) {
+                value.title = newItem.title;
+                saved = false;
+            }
+            if (!value.content.equals(newItem.content)) {
+                value.content = newItem.content;
+                saved = false;
+            }
         }
         item.setValue(value);
     }
 
     void saveEvent() {
+        if (saved) return;
+        saved = true;
 
         EventItem value = item.getValue();
         if (value == null) return;
@@ -54,6 +69,10 @@ public class EventDetailViewModel extends ViewModel implements SingleObserver<Re
             // insert to db
             eventSaveInsert.setItem(value);
             eventSaveInsert.execute().subscribe(this);
+        } else if (TextUtils.isEmpty(value.title) && TextUtils.isEmpty(value.content)) {
+            // delete from db
+            eventSaveDelete.setItem(value);
+            eventSaveDelete.execute().subscribe(this);
         } else {
             // update db
             eventSaveUpdate.setItem(value);
