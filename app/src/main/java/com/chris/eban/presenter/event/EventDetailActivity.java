@@ -153,12 +153,14 @@ public class EventDetailActivity extends BaseActivity {
         imm.hideSoftInputFromWindow(binding.etTitle.getWindowToken(), 0);
         binding.etContent.clearFocus();
         binding.etTitle.clearFocus();
+        binding.etTitle.setOnTouchListener(touchListener);
+        binding.etContent.setOnTouchListener(touchListener);
         status = PAGE_STATUS_SAVE;
         invalidateOptionsMenu();
     }
 
     private void showIme() {
-        showIme(binding.etTitle);
+        showIme(binding.etContent);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -199,6 +201,7 @@ public class EventDetailActivity extends BaseActivity {
         Editable content = binding.etContent.getText();
 
         if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
+            if (viewModel.hadId()) viewModel.deleteEvent();
             setResult(RESULT_CANCELED);
             finish();
         } else {

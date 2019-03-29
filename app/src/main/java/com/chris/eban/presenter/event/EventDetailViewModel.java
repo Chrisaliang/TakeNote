@@ -1,7 +1,5 @@
 package com.chris.eban.presenter.event;
 
-import android.text.TextUtils;
-
 import com.chris.eban.domain.Result;
 import com.chris.eban.domain.usecase.EventSaveDelete;
 import com.chris.eban.domain.usecase.EventSaveInsert;
@@ -20,7 +18,7 @@ public class EventDetailViewModel extends ViewModel implements SingleObserver<Re
     private static final String TAG = "EventDetailViewModel";
 
     public final MutableLiveData<EventItem> item = new MutableLiveData<>();
-    private boolean saved = false;
+    private boolean saved = true;
     private EventSaveInsert eventSaveInsert;
     private EventSaveUpdate eventSaveUpdate;
     private EventSaveDelete eventSaveDelete;
@@ -69,17 +67,19 @@ public class EventDetailViewModel extends ViewModel implements SingleObserver<Re
             // insert to db
             eventSaveInsert.setItem(value);
             eventSaveInsert.execute().subscribe(this);
-        } else if (TextUtils.isEmpty(value.title) && TextUtils.isEmpty(value.content)) {
-            // delete from db
-            eventSaveDelete.setItem(value);
-            eventSaveDelete.execute().subscribe(this);
         } else {
             // update db
             eventSaveUpdate.setItem(value);
             eventSaveUpdate.execute().subscribe(this);
         }
+    }
 
-
+    void deleteEvent() {
+        // delete from db
+        EventItem value = item.getValue();
+        if (value == null) return;
+        eventSaveDelete.setItem(value);
+        eventSaveDelete.execute().subscribe(this);
     }
 
     @Override
@@ -112,4 +112,7 @@ public class EventDetailViewModel extends ViewModel implements SingleObserver<Re
     }
 
 
+    boolean hadId() {
+        return item.getValue() != null && item.getValue().id > 0;
+    }
 }
