@@ -25,6 +25,8 @@ import javax.inject.Inject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
