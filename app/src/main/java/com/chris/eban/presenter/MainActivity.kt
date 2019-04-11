@@ -1,15 +1,12 @@
 package com.chris.eban.presenter
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import com.chris.eban.R
 import com.chris.eban.presenter.event.EventDetailActivity
@@ -19,7 +16,6 @@ import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import timber.log.Timber
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,7 +30,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     .commitNow()
 
         fab.setOnClickListener {
-            //            showAddLog()
             createNewEvent()
         }
 
@@ -63,20 +58,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val intent = Intent(this, EventDetailActivity::class.java)
         intent.putExtra(PAGE_STATUS, PAGE_STATUS_EDIT)
         startActivityForResult(intent, REQUEST_CODE_CREATE)
-    }
-
-    @Suppress("unused")
-    @SuppressLint("InflateParams")
-    private fun showAddLog() {
-        val newEvent = LayoutInflater.from(this)
-                .inflate(R.layout.layout_new_event, null)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.main_event_new_event)
-                .setView(newEvent)
-//                .setPositiveButton("",null)
-                .create().show()
-        Timber.tag(TAG).d("show dialog")
     }
 
     override fun onBackPressed() {

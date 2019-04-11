@@ -14,12 +14,13 @@ public class EventListMapper {
         return eventItems;
     }
 
-    private EventItem map(DMEventListItem dmEventListItem) {
-        return new EventItem(dmEventListItem.title, dmEventListItem.content);
+    public EventItem map(DMEventListItem dmEventListItem) {
+        return new EventItem(dmEventListItem.id, dmEventListItem.title, dmEventListItem.content);
     }
 
     public DMEventListItem map(EventItem item) {
         DMEventListItem dmEventListItem = new DMEventListItem();
+        dmEventListItem.id = item.id;
         dmEventListItem.content = item.content;
         dmEventListItem.title = item.title;
         return dmEventListItem;

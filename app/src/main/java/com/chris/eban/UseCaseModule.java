@@ -3,7 +3,9 @@ package com.chris.eban;
 import com.chris.eban.domain.EventListRepository;
 import com.chris.eban.domain.JobThread;
 import com.chris.eban.domain.usecase.EventListQuery;
+import com.chris.eban.domain.usecase.EventSaveDelete;
 import com.chris.eban.domain.usecase.EventSaveInsert;
+import com.chris.eban.domain.usecase.EventSaveUpdate;
 
 import javax.inject.Singleton;
 
@@ -25,5 +27,17 @@ abstract class UseCaseModule {
     @Singleton
     static EventSaveInsert eventSave(JobThread jobThread, EventListRepository repository) {
         return new EventSaveInsert(jobThread, repository);
+    }
+
+    @Provides
+    @Singleton
+    static EventSaveUpdate saveUpdate(JobThread jobThread, EventListRepository repository) {
+        return new EventSaveUpdate(jobThread, repository);
+    }
+
+    @Provides
+    @Singleton
+    static EventSaveDelete saveDelete(JobThread jobThread, EventListRepository repository) {
+        return new EventSaveDelete(jobThread, repository);
     }
 }

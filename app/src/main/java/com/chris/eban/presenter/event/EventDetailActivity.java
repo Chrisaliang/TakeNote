@@ -1,5 +1,6 @@
 package com.chris.eban.presenter.event;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,14 +8,14 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.chris.eban.R;
-import com.chris.eban.databinding.ActivityCreateEventBinding;
-import com.chris.eban.domain.Result;
-import com.chris.eban.domain.usecase.EventSaveInsert;
+import com.chris.eban.databinding.ActivityEventDetailBinding;
 import com.chris.eban.presenter.BaseActivity;
 
 import java.util.Objects;
@@ -24,8 +25,8 @@ import javax.inject.Inject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
 public class EventDetailActivity extends BaseActivity {
@@ -39,14 +40,27 @@ public class EventDetailActivity extends BaseActivity {
 
     private String status;
     @Inject
-    EventSaveInsert eventSaveInsert;
+    ViewModelProvider.Factory factory;
 
-    private ActivityCreateEventBinding binding;
+    private ActivityEventDetailBinding binding;
+    private EventDetailViewModel viewModel;
+
+    private InputMethodManager imm;
+
+    private View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            showIme((EditText) v);
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_event);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
+        binding.setLifecycleOwner(this);
         setSupportActionBar(binding.toolbar2);
 
         setStatusBarTextColor(getWindow(), true);
@@ -57,60 +71,92 @@ public class EventDetailActivity extends BaseActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
+        viewModel = ViewModelProviders.of(this, factory).get(EventDetailViewModel.class);
         // 判断启动方式，切换编辑状态
         Intent intent = getIntent();
         status = intent.getStringExtra(PAGE_STATUS);
         Timber.tag(TAG).d("page start status: %s", status);
+        EventItem item = Objects.requireNonNull(intent.getExtras()).getParcelable(PAGE_ITEM);
+        viewModel.setItem(item);
+        binding.setDetail(viewModel);
+
+        binding.etTitle.setOnTouchListener(touchListener);
+        binding.etContent.setOnTouchListener(touchListener);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
         switch (status) {
             case PAGE_STATUS_EDIT:
-                showEditStatus();
+                showToolBarMenu(menu, true);
                 break;
             case PAGE_STATUS_SAVE:
-                showSaveStatus(intent);
+                showToolBarMenu(menu, false);
                 break;
         }
+        return super.onPrepareOptionsMenu(menu);
     }
 
-    private void showEditStatus() {
+    private void showToolBarMenu(Menu menu, boolean toggle) {
 
-    }
-
-    private void showSaveStatus(Intent intent) {
-        EventItem item = Objects.requireNonNull(intent.getExtras()).getParcelable(PAGE_ITEM);
-        if (item != null) {
-            binding.etTitle.setText(item.title);
-            binding.etContent.setText(item.content);
-        }
-
+        menu.findItem(R.id.action_event_save).setVisible(toggle);
+        menu.findItem(R.id.action_event_edit).setVisible(!toggle);
+        menu.findItem(R.id.action_event_favorite).setVisible(!toggle);
+        menu.findItem(R.id.action_event_share).setVisible(!toggle);
+        menu.findItem(R.id.action_event_delete).setVisible(!toggle);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        int menuRes = -1;
-        switch (status) {
-            case PAGE_STATUS_EDIT:
-                menuRes = R.menu.create;
-                break;
-            case PAGE_STATUS_SAVE:
-                menuRes = R.menu.event_save;
-                break;
-        }
-        getMenuInflater().inflate(menuRes, menu);
+        getMenuInflater().inflate(R.menu.event_save, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_create_save:
+            case R.id.action_event_save:
                 saveEvent();
                 return true;
+            case R.id.action_event_edit:
+                showIme();
+                break;
             case android.R.id.home:
+                hideIme();
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideIme() {
+        if (imm == null)
+            imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.etTitle.getWindowToken(), 0);
+        binding.etContent.clearFocus();
+        binding.etTitle.clearFocus();
+        binding.etTitle.setOnTouchListener(touchListener);
+        binding.etContent.setOnTouchListener(touchListener);
+        status = PAGE_STATUS_SAVE;
+        invalidateOptionsMenu();
+    }
+
+    private void showIme() {
+        showIme(binding.etContent);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void showIme(EditText view) {
+        if (imm == null)
+            imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            view.requestFocus();
+            view.setSelection(view.getText().length());
+            imm.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
+            status = PAGE_STATUS_EDIT;
+            invalidateOptionsMenu();
+            view.setOnTouchListener(null);
+        }
     }
 
 
@@ -129,59 +175,21 @@ public class EventDetailActivity extends BaseActivity {
         decor.setSystemUiVisibility(ui);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-//        Toast.makeText(this, "onBackPressed", Toast.LENGTH_SHORT).show();
-        saveEvent(false);
-    }
-
     private void saveEvent() {
-        saveEvent(true);
-    }
 
-    private void saveEvent(boolean fromSave) {
+        hideIme();
 
         Editable title = binding.etTitle.getText();
         Editable content = binding.etContent.getText();
 
         if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
-            if (fromSave) {
-                setResult(RESULT_CANCELED);
-            } else {
-                setResult(RESULT_OK);
-            }
-//            setResult(fromSave ? RESULT_CANCELED : RESULT_OK);
+            if (viewModel.hadId()) viewModel.deleteEvent();
+            setResult(RESULT_CANCELED);
             finish();
         } else {
             Timber.tag(TAG).d("\nEventTitle:%s \nEventContent:%s", title, content);
-            binding.etTitle.clearFocus();
-            binding.etContent.clearFocus();
-            Toast.makeText(this, title + ": " + content, Toast.LENGTH_LONG).show();
-
-            EventItem eventItem = new EventItem(title.toString(), content.toString());
-//            eventItem.title = title.toString();
-//            eventItem.content = content.toString();
-            eventSaveInsert.setItem(eventItem);
-
-            eventSaveInsert.execute().subscribe(new SingleObserver<Result<Boolean>>() {
-                @Override
-                public void onSubscribe(Disposable disposable) {
-
-                }
-
-                @Override
-                public void onSuccess(Result<Boolean> booleanResult) {
-
-                }
-
-                @Override
-                public void onError(Throwable throwable) {
-
-                }
-            });
-
-
+            viewModel.setItem(title, content);
+            viewModel.saveEvent();
             setResult(RESULT_OK);
         }
     }

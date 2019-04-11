@@ -3,6 +3,7 @@ package com.chris.eban.presenter.event;
 import com.chris.eban.domain.Result;
 import com.chris.eban.domain.entity.DMEventListItem;
 import com.chris.eban.domain.usecase.EventListQuery;
+import com.chris.eban.domain.usecase.EventSaveDelete;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,11 +21,13 @@ public class EventListViewModel extends ViewModel implements SingleObserver<Resu
     public final MutableLiveData<Boolean> hasData = new MutableLiveData<>();
     private final MutableLiveData<List<EventItem>> eventList = new MutableLiveData<>();
     private EventListQuery listQuery;
+    private EventSaveDelete saveDelete;
     private EventListMapper mapper;
     private Disposable disposable;
 
-    public EventListViewModel(EventListQuery listQuery) {
+    public EventListViewModel(EventListQuery listQuery, EventSaveDelete saveDelete) {
         this.listQuery = listQuery;
+        this.saveDelete = saveDelete;
         mapper = new EventListMapper();
     }
 
@@ -79,5 +82,7 @@ public class EventListViewModel extends ViewModel implements SingleObserver<Resu
 
     void removeItem(EventItem item) {
         Objects.requireNonNull(eventList.getValue()).remove(item);
+        saveDelete.setItem(item);
+        saveDelete.execute().subscribe();
     }
 }

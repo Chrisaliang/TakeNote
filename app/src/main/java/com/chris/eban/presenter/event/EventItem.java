@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class EventItem implements Parcelable {
-    public String title;
-
     public static final Creator<EventItem> CREATOR = new Creator<EventItem>() {
         @Override
         public EventItem createFromParcel(Parcel in) {
@@ -17,23 +15,25 @@ public class EventItem implements Parcelable {
             return new EventItem[size];
         }
     };
-
+    public long id;
+    public String title;
     public String content;
+
+    protected EventItem(Parcel in) {
+        id = in.readLong();
+        title = in.readString();
+        content = in.readString();
+    }
 
     public EventItem(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
-    protected EventItem(Parcel in) {
-        title = in.readString();
-        content = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(content);
+    public EventItem(long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
     }
 
     @Override
@@ -42,10 +42,9 @@ public class EventItem implements Parcelable {
     }
 
     @Override
-    public String toString() {
-        return "EventItem{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(title);
+        dest.writeString(content);
     }
 }
