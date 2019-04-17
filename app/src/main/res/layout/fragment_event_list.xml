@@ -29,9 +29,9 @@
             android:id="@+id/list_event"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:isGone="@{safeUnbox(!event.hasData)}"
             tools:itemCount="3"
             tools:listitem="@layout/item_event_list" />
+        <!--app:isGone="@{safeUnbox(!event.hasData)}"-->
 
     </FrameLayout>
 </layout>
