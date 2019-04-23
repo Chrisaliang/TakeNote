@@ -1,5 +1,8 @@
 package com.chris.eban.presenter.event;
 
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 import com.chris.eban.domain.Result;
 import com.chris.eban.domain.entity.DMEventListItem;
 import com.chris.eban.domain.usecase.EventListQuery;
@@ -8,8 +11,6 @@ import com.chris.eban.domain.usecase.EventSaveDelete;
 import java.util.List;
 import java.util.Objects;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
@@ -76,7 +77,8 @@ public class EventListViewModel extends ViewModel implements SingleObserver<Resu
         return eventList;
     }
 
-    void query() {
+    void queryChanged() {
+        // TODO: 4/23/2019 query changed item
         init();
     }
 

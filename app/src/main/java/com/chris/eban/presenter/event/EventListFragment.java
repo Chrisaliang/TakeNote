@@ -6,14 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.chris.eban.R;
-import com.chris.eban.databinding.FragmentEventListBinding;
-import com.chris.eban.presenter.BaseFragment;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -24,6 +16,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.chris.eban.R;
+import com.chris.eban.databinding.FragmentEventListBinding;
+import com.chris.eban.presenter.BaseFragment;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 public class EventListFragment extends BaseFragment {
@@ -76,8 +77,7 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        // TODO: 2019/3/29 query the updated item
-        viewModel.query();
+        viewModel.queryChanged();
     }
 
     class ItemTouchHelperCallBack extends ItemTouchHelper.Callback {
