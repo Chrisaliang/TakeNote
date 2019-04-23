@@ -1,5 +1,8 @@
 package com.chris.eban.presenter.event;
 
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 import com.chris.eban.domain.Result;
 import com.chris.eban.domain.usecase.EventSaveDelete;
 import com.chris.eban.domain.usecase.EventSaveInsert;
@@ -7,8 +10,6 @@ import com.chris.eban.domain.usecase.EventSaveUpdate;
 
 import java.util.Objects;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
@@ -90,7 +91,7 @@ public class EventDetailViewModel extends ViewModel implements SingleObserver<Re
 
     @Override
     public void onSuccess(Result<Long> longResult) {
-        Objects.requireNonNull(item.getValue()).id = longResult.content;
+        Objects.requireNonNull(item.getValue()).id = longResult.getContent();
     }
 
     @Override

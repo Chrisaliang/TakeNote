@@ -1,4 +1,4 @@
-package com.chris.eban.domain;
+package com.chris.eban.domain
 
 /**
  * Basic Executable Unit in business logic.
@@ -7,11 +7,11 @@ package com.chris.eban.domain;
  *
  * @param <Result>
  * @see SingleUseCase
- */
-public interface Interactor<Result> {
+</Result> */
+interface Interactor<Result> {
 
     /**
      * business logic exe
      */
-    Result execute();
+    fun execute(): Result
 }
