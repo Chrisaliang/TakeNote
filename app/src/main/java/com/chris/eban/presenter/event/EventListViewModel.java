@@ -84,6 +84,8 @@ public class EventListViewModel extends ViewModel implements SingleObserver<Resu
 
     void removeItem(EventItem item) {
         Objects.requireNonNull(eventList.getValue()).remove(item);
+
+
         saveDelete.setItem(item);
         saveDelete.execute().subscribe();
     }
