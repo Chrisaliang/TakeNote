@@ -11,7 +11,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-internal object ViewModelModule {
+class ViewModelModule {
 
     @Singleton
     @Provides

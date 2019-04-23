@@ -8,7 +8,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-internal object RepositoryModule {
+class RepositoryModule {
 
     @Provides
     @Singleton

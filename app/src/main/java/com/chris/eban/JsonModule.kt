@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-internal object JsonModule {
+class JsonModule {
 
     private val DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ2"
 

@@ -139,9 +139,9 @@ android.applicationVariants.all {
         }
 }
 
-//kapt {
-//    generateStubs true
-//}
+kapt {
+    generateStubs true
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

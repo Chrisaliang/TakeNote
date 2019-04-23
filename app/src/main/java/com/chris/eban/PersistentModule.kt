@@ -11,7 +11,7 @@ import javax.inject.Singleton
  * 持久化模块
  */
 @Module
-internal object PersistentModule {
+class PersistentModule {
 
     private val DB_NAME = "eBan.db"
 

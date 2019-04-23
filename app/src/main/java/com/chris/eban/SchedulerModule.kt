@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Module
-internal object SchedulerModule {
+class SchedulerModule {
 
     @Provides
     @Singleton

@@ -9,16 +9,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chris.eban.R;
-import com.chris.eban.databinding.FragmentEventListBinding;
 import com.chris.eban.presenter.BaseFragment;
 
 import java.util.List;
@@ -27,10 +25,14 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
+//import androidx.recyclerview.widget.DividerItemDecoration;
+//import androidx.recyclerview.widget.LinearLayoutManager;
+//import com.chris.eban.databinding.FragmentEventListBinding;
+
 public class EventListFragment extends BaseFragment {
 
     private static final String TAG = "EventListFragment";
-    private FragmentEventListBinding binding;
+    private ViewDataBinding binding;
     @Inject
     ViewModelProvider.Factory factory;
     private EventListAdapter eventListAdapter;
@@ -50,7 +52,7 @@ public class EventListFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this, factory).get(EventListViewModel.class);
         Timber.tag(TAG).d("onActivityCreated: %s", viewModel);
-        binding.setEvent(viewModel);
+//        binding.setEvent(viewModel);
 
         viewModel.init();
 
@@ -65,13 +67,13 @@ public class EventListFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallBack());
-        itemTouchHelper.attachToRecyclerView(binding.listEvent);
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallBack());
+//        itemTouchHelper.attachToRecyclerView(binding.listEvent);
         eventListAdapter = new EventListAdapter();
-        binding.listEvent.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        binding.listEvent.addItemDecoration(
-                new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-        binding.listEvent.setAdapter(eventListAdapter);
+//        binding.listEvent.setLayoutManager(new LinearLayoutManager(view.getContext()));
+//        binding.listEvent.addItemDecoration(
+//                new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+//        binding.listEvent.setAdapter(eventListAdapter);
     }
 
     @Override

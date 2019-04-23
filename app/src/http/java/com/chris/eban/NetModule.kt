@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-object NetModule {
+class NetModule {
 
     @Singleton
     @Provides
