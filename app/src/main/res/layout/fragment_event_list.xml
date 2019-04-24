@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="event"
             type="com.chris.eban.presenter.event.EventListViewModel" />
@@ -24,6 +26,7 @@
             android:textSize="24sp"
             app:isGone="@{safeUnbox(event.hasData)}"
             tools:visibility="visible" />
+        <!--android:visibility="@{event.hasData ? View.VISIBLE : View.GONE}"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_event"

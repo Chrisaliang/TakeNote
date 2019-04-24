@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'
 
 static def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
@@ -139,9 +139,9 @@ android.applicationVariants.all {
         }
 }
 
-//kapt {
-//    generateStubs true
-//}
+kapt {
+    generateStubs true
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -150,7 +150,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.1.0-alpha05'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13-beta-2'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
@@ -158,30 +158,33 @@ dependencies {
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0-alpha04"
 
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'com.github.akarnokd:rxjava2-extensions:0.19.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.github.akarnokd:rxjava2-extensions:0.20.8'
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
     implementation 'com.squareup.retrofit2:retrofit:' + retrofit2
     implementation 'com.squareup.retrofit2:converter-gson:' + retrofit2
 
-    implementation 'com.google.dagger:dagger-android:' + dagger2
-    implementation 'com.google.dagger:dagger-android-support:' + dagger2
-    //    implementation 'com.google.dagger:dagger:' + dagger2
-    //    kapt "com.google.dagger:dagger-android-processor:$dagger2"
-    //    kapt 'com.google.dagger:dagger-compiler:' + dagger2
-    annotationProcessor 'com.google.dagger:dagger-android-processor:' + dagger2
-    annotationProcessor 'com.google.dagger:dagger-compiler:' + dagger2
+    implementation "com.google.dagger:dagger:$dagger2"
+    kapt "com.google.dagger:dagger-compiler:$dagger2"
+    implementation "com.google.dagger:dagger-android:$dagger2"
+    implementation "com.google.dagger:dagger-android-support:$dagger2"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2"
+    kapt "com.google.dagger:dagger-android-support:$dagger2"
 
-//    kapt "com.android.databinding:compiler:3.1.3"
-//    kapt "android.arch.persistence.room:compiler:1.1.1"
+    kapt 'com.android.databinding:compiler:3.1.4'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
-    implementation "android.arch.persistence.room:runtime:" + room
+    implementation 'android.arch.persistence.room:runtime:' + room
     implementation 'android.arch.persistence.room:rxjava2:' + room
-    annotationProcessor "android.arch.persistence.room:compiler:" + room
-    implementation 'com.jakewharton.timber:timber:4.7.0'
+    annotationProcessor 'android.arch.persistence.room:compiler:' + room
+    testImplementation 'android.arch.persistence.room:testing:' + room
+    kapt 'android.arch.persistence.room:compiler:' + room
+    androidTestImplementation 'android.arch.persistence.room:testing:' + room
+//    implementation "android.arch.persistence.room:guava:$room"
 
-//    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+//    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.ar:core:1.8.0'
 }

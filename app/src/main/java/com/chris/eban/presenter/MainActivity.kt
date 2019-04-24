@@ -10,8 +10,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import com.chris.eban.R
 import com.chris.eban.presenter.event.EventDetailActivity
-import com.chris.eban.presenter.event.EventDetailActivity.PAGE_STATUS
-import com.chris.eban.presenter.event.EventDetailActivity.PAGE_STATUS_EDIT
+import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS
+import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS_EDIT
 import com.chris.eban.presenter.event.EventListFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,9 +29,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     .replace(R.id.fragment_replace, EventListFragment())
                     .commitNow()
 
-        fab.setOnClickListener {
-            createNewEvent()
-        }
+        fab.setOnClickListener { createNewEvent() }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
