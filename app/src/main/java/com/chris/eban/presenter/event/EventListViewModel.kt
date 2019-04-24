@@ -17,7 +17,7 @@ class EventListViewModel(private val listQuery: EventListQuery,
     private val hasData = MutableLiveData<Boolean>()
     val eventList = MutableLiveData<MutableList<EventItem>>()
     private val mapper: EventListMapper = EventListMapper()
-    private lateinit var disposable: Disposable
+    private var disposable: Disposable? = null
 
     fun init() {
         Timber.tag(TAG).d("init: this is viewModel and has data :%s", hasData.value)
@@ -53,7 +53,7 @@ class EventListViewModel(private val listQuery: EventListQuery,
     }
 
     private fun checkDisposable() {
-        disposable.dispose()
+        disposable?.dispose()
     }
 
     fun queryChanged() {
