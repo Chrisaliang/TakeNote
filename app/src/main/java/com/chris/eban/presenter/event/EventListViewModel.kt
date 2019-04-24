@@ -14,7 +14,7 @@ class EventListViewModel(private val listQuery: EventListQuery,
                          private val saveDelete: EventSaveDelete) : ViewModel(),
         SingleObserver<Result<List<DMEventListItem>>> {
 
-    private val hasData = MutableLiveData<Boolean>()
+    val hasData = MutableLiveData<Boolean>()
     val eventList = MutableLiveData<MutableList<EventItem>>()
     private val mapper: EventListMapper = EventListMapper()
     private var disposable: Disposable? = null
