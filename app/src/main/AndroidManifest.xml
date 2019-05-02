@@ -17,11 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".presenter.ArActivity"></activity>
 
         <meta-data
             android:name="com.google.ar.core"
             android:value="optional" />
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="face" />
 
         <activity
             android:name=".presenter.MainActivity"
