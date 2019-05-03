@@ -114,7 +114,8 @@
                 android:text="@{item.updateTime}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView7"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                app:layout_constraintTop_toBottomOf="@+id/textView7"
+                tools:text="Apr 14,2019" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
