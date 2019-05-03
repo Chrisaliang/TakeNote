@@ -92,7 +92,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             }
             R.id.nav_slideshow -> {
-
+                startActivity(Intent(this, FaceDetectActivity::class.java))
             }
             R.id.nav_manage -> {
 
