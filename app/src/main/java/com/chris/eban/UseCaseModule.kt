@@ -2,10 +2,7 @@ package com.chris.eban
 
 import com.chris.eban.domain.EventListRepository
 import com.chris.eban.domain.JobThread
-import com.chris.eban.domain.usecase.EventListQuery
-import com.chris.eban.domain.usecase.EventSaveDelete
-import com.chris.eban.domain.usecase.EventSaveInsert
-import com.chris.eban.domain.usecase.EventSaveUpdate
+import com.chris.eban.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -19,6 +16,12 @@ class UseCaseModule {
     @Singleton
     fun eventListQuery(jobThread: JobThread, repository: EventListRepository): EventListQuery {
         return EventListQuery(jobThread, repository)
+    }
+
+    @Provides
+    @Singleton
+    fun eventItemQuery(jobThread: JobThread, repository: EventListRepository): EventItemQuery {
+        return EventItemQuery(jobThread, repository)
     }
 
     @Provides

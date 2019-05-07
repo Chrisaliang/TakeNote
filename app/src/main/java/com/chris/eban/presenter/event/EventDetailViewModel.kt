@@ -3,6 +3,8 @@ package com.chris.eban.presenter.event
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.chris.eban.domain.Result
+import com.chris.eban.domain.entity.DMEventListItem
+import com.chris.eban.domain.usecase.EventItemQuery
 import com.chris.eban.domain.usecase.EventSaveDelete
 import com.chris.eban.domain.usecase.EventSaveInsert
 import com.chris.eban.domain.usecase.EventSaveUpdate
@@ -11,16 +13,24 @@ import io.reactivex.disposables.Disposable
 import timber.log.Timber
 import java.util.*
 
-class EventDetailViewModel(private val eventSaveInsert: EventSaveInsert,
+class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
+                           private val eventSaveInsert: EventSaveInsert,
                            private val eventSaveUpdate: EventSaveUpdate,
                            private val eventSaveDelete: EventSaveDelete) : ViewModel(), SingleObserver<Result<Long>> {
 
     val item = MutableLiveData<EventItem>()
+    private var mapper = EventListMapper()
     private var saved = true
     private var disposable: Disposable? = null
 
     fun setItem(item: EventItem) {
         this.item.value = item
+    }
+
+    fun queryItemById(itemId: Long) {
+        eventItemQuery.setItemId(itemId)
+        // TODO get the result
+        eventItemQuery.execute().subscribe { t: Result<DMEventListItem>? -> setItem(mapper.map(t!!.content)) }
     }
 
     fun setItem(title: CharSequence, content: CharSequence) {
@@ -51,8 +61,9 @@ class EventDetailViewModel(private val eventSaveInsert: EventSaveInsert,
         val value = item.value ?: return
         if (value.id == 0L) {
             // insert to db
-            eventSaveInsert.setItem(value)
-            eventSaveInsert.execute().subscribe(this)
+            // todo change this
+//            eventSaveInsert.setItem(value)
+//            eventSaveInsert.execute().subscribe(this)
         } else {
             // update db
             eventSaveUpdate.setItem(value)

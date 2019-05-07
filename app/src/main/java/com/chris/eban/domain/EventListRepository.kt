@@ -11,6 +11,11 @@ interface EventListRepository {
     fun queryEventList(): List<DMEventListItem>
 
     /**
+     * 根据item id 获取item 信息
+     */
+    fun queryEventItem(itemId: Long): DMEventListItem
+
+    /**
      * 存储一条事件条目
      * @param item 事件
      */
