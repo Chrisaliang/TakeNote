@@ -16,7 +16,8 @@ import java.util.*
 class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
                            private val eventSaveInsert: EventSaveInsert,
                            private val eventSaveUpdate: EventSaveUpdate,
-                           private val eventSaveDelete: EventSaveDelete) : ViewModel(), SingleObserver<Result<Long>> {
+                           private val eventSaveDelete: EventSaveDelete)
+    : ViewModel(), SingleObserver<Result<Long>> {
 
     val item = MutableLiveData<EventItem>()
     private var mapper = EventListMapper()
@@ -61,9 +62,8 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
         val value = item.value ?: return
         if (value.id == 0L) {
             // insert to db
-            // todo change this
-//            eventSaveInsert.setItem(value)
-//            eventSaveInsert.execute().subscribe(this)
+            eventSaveInsert.setItem(mapper.map(value))
+            eventSaveInsert.execute().subscribe(this)
         } else {
             // update db
             eventSaveUpdate.setItem(value)
@@ -84,6 +84,7 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
     }
 
     override fun onSuccess(longResult: Result<Long>) {
+        // todo deal the result from room
         Objects.requireNonNull<EventItem>(item.value).id = longResult.content
     }
 

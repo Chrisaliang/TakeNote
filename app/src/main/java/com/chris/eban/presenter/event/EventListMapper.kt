@@ -36,10 +36,11 @@ class EventListMapper {
     fun map(item: EventItem): DMEventListItem {
         val dmEventListItem = DMEventListItem()
         dmEventListItem.id = item.id
-//        dmEventListItem.content = item.content
-//        dmEventListItem.title = item.title
-//        dmEventListItem.createDate = item.createTime
-//        dmEventListItem.updateDate = item.updateTime
+        dmEventListItem.content = item.content!!
+        dmEventListItem.title = item.title!!
+        if (item.id == 0L)
+            dmEventListItem.createDate = Date()
+        dmEventListItem.updateDate = Date()
         return dmEventListItem
     }
 }

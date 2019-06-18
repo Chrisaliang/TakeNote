@@ -27,7 +27,6 @@ class EventSaveInsert(private val jobThread: JobThread,
     }
 
     companion object {
-
         private const val TAG = "EventSaveInsert"
     }
 }
