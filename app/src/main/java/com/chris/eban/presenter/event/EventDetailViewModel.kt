@@ -85,6 +85,8 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
 
     override fun onSuccess(longResult: Result<Long>) {
         // todo deal the result from room
+
+
         Objects.requireNonNull<EventItem>(item.value).id = longResult.content
     }
 
