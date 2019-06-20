@@ -66,7 +66,7 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
             eventSaveInsert.execute().subscribe(this)
         } else {
             // update db
-            eventSaveUpdate.setItem(value)
+            eventSaveUpdate.setItem(mapper.map(value))
             eventSaveUpdate.execute().subscribe(this)
         }
     }
@@ -85,8 +85,6 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
 
     override fun onSuccess(longResult: Result<Long>) {
         // todo deal the result from room
-
-
         Objects.requireNonNull<EventItem>(item.value).id = longResult.content
     }
 
@@ -94,7 +92,6 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
         Timber.tag(TAG).e(e, "onError: ")
         checkDisposable()
     }
-
 
     override fun onCleared() {
         super.onCleared()
@@ -106,13 +103,11 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
             disposable!!.dispose()
     }
 
-
     fun hadId(): Boolean {
         return item.value != null && item.value!!.id > 0
     }
 
     companion object {
-
         private const val TAG = "EventDetailViewModel"
     }
 }

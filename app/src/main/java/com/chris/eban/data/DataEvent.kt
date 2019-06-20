@@ -27,7 +27,7 @@ data class DataEvent(
         var updateTime: Date
 ) {
     override fun toString(): String {
-        return "DataEvent(id=$id, title=$title, content=$content, createTime=$createTime," +
+        return "DataEvent(id=$id, title='$title', content='$content', createTime=$createTime," +
                 " updateTime=$updateTime)"
     }
 }
