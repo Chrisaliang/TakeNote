@@ -6,6 +6,14 @@ import com.chris.eban.domain.entity.DMEventListItem
 import timber.log.Timber
 
 class EventListRepositoryImpl(private val eventDao: EventDao) : EventListRepository {
+
+    override fun queryEventItem(itemId: Long): DMEventListItem {
+        val event = eventDao.queryEventItem(itemId)
+        Timber.tag(TAG).d("event: id: %d\n event:%s", itemId, event)
+        return mapper.map(event)
+    }
+
+
     private val mapper: EventMapper = EventMapper()
 
     override fun queryEventList(): List<DMEventListItem> {

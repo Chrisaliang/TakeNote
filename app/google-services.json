@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "419975461162",
+    "firebase_url": "https://eban-2427e.firebaseio.com",
+    "project_id": "eban-2427e",
+    "storage_bucket": "eban-2427e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419975461162:android:82743688092a8cc9",
+        "android_client_info": {
+          "package_name": "com.chris.eban"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419975461162-drk8frbsde5vo4vudlscnajh272vto30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7d6hVdcqLgKYvnVh4xp9eH1slvhqgCBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419975461162-drk8frbsde5vo4vudlscnajh272vto30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

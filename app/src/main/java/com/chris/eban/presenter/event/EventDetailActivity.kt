@@ -54,9 +54,11 @@ class EventDetailActivity : BaseActivity() {
         val intent = intent
         status = intent.getStringExtra(PAGE_STATUS)
         Timber.tag(TAG).d("page start status: %s", status)
-        val item = intent?.extras?.getParcelable<EventItem>(PAGE_ITEM)
-        if (item != null)
-            viewModel?.setItem(item)
+
+        val itemId = intent.getLongExtra(PAGE_ITEM_ID, -1L)
+        if (itemId != -1L)
+            viewModel?.queryItemById(itemId)
+
         binding!!.detail = viewModel
 
         binding!!.etTitle.setOnTouchListener(touchListener)
@@ -169,7 +171,9 @@ class EventDetailActivity : BaseActivity() {
 
     companion object {
         const val PAGE_STATUS = "com.chris.eban.presenter.event.EventDetailActivity.pageStatus"
-        const val PAGE_ITEM = "com.chris.eban.presenter.event.EventDetailActivity.pageItem"
+
+        const val PAGE_ITEM_ID = "com.chris.eban.presenter.event.EventDetailActivity.pageItemId"
+
         const val PAGE_STATUS_EDIT = "edit" // 编辑状态
         const val PAGE_STATUS_SAVE = "save" // 保存状态
         private const val TAG = "EventDetailActivity"

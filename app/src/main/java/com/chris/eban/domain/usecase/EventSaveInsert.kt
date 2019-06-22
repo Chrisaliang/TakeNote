@@ -3,13 +3,22 @@ package com.chris.eban.domain.usecase
 import com.chris.eban.domain.EventListRepository
 import com.chris.eban.domain.JobThread
 import com.chris.eban.domain.SingleUseCase
+
+import com.chris.eban.domain.entity.DMEventListItem
+
 import com.chris.eban.presenter.event.EventItem
 import com.chris.eban.presenter.event.EventListMapper
+
 import io.reactivex.Single
 import timber.log.Timber
 
 class EventSaveInsert(private val jobThread: JobThread,
                       private val repository: EventListRepository) : SingleUseCase<Long>() {
+
+
+    private lateinit var item: DMEventListItem
+
+    fun setItem(item: DMEventListItem) {
 
     private val mapper: EventListMapper = EventListMapper()
 
@@ -17,6 +26,7 @@ class EventSaveInsert(private val jobThread: JobThread,
     private var item: EventItem? = null
 
     fun setItem(item: EventItem) {
+
         this.item = item
     }
 
@@ -24,7 +34,11 @@ class EventSaveInsert(private val jobThread: JobThread,
         return Single.just(repository)
                 .map { repository ->
                     Timber.tag(TAG).d("save a event:%s", item)
+
+                    repository.saveEvent(item)
+
                     repository.saveEvent(mapper.map(item!!))
+
                 }
                 .subscribeOn(jobThread.provideWorker())
                 .observeOn(jobThread.provideUI())
@@ -32,6 +46,7 @@ class EventSaveInsert(private val jobThread: JobThread,
 
     companion object {
 
-        private val TAG = "EventSaveInsert"
+        private const val TAG = "EventSaveInsert"
+
     }
 }

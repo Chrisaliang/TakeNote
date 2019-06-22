@@ -1,7 +1,8 @@
 package com.chris.eban.presenter.event
 
 import android.content.Intent
-import android.os.Bundle
+
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chris.eban.R
 import com.chris.eban.databinding.ItemEventListBinding
-import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_ITEM
+
+import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_ITEM_ID
+
 import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS
 import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS_SAVE
 import java.util.*
@@ -68,9 +71,9 @@ class EventListAdapter internal constructor() : RecyclerView.Adapter<EventListAd
         override fun onClick(v: View) {
             val intent = Intent(v.context, EventDetailActivity::class.java)
             intent.putExtra(PAGE_STATUS, PAGE_STATUS_SAVE)
-            val extras = Bundle()
-            extras.putParcelable(PAGE_ITEM, item)
-            intent.putExtras(extras)
+
+            intent.putExtra(PAGE_ITEM_ID, item?.id)
+
             v.context.startActivity(intent)
         }
     }

@@ -13,6 +13,11 @@ interface Tables {
             const val COLUMN_TITLE = "title"
 
             const val COLUMN_CONTENT = "content"
+
+            const val COLUMN_UPDATE_TIME = "update_time"
+
+            const val COLUMN_CREATE_TIME = "create_time"
+
         }
     }
 }
