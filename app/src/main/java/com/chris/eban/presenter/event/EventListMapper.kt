@@ -25,10 +25,11 @@ class EventListMapper {
         item.content = dmEventListItem.content
         item.createTime = getTimeStr(dmEventListItem.createDate)
         item.updateTime = getTimeStr(dmEventListItem.updateDate)
+        item.createDate = dmEventListItem.createDate
         return item
     }
 
-    private fun getTimeStr(date: Date): String? {
+    private fun getTimeStr(date: Date?): String? {
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         return sdf.format(date)
     }
@@ -40,6 +41,8 @@ class EventListMapper {
         dmEventListItem.title = item.title!!
         if (item.id == 0L)
             dmEventListItem.createDate = Date()
+        else
+            dmEventListItem.createDate = item.createDate
         dmEventListItem.updateDate = Date()
         return dmEventListItem
     }

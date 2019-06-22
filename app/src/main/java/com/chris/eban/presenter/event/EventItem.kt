@@ -1,13 +1,15 @@
 package com.chris.eban.presenter.event
 
 import android.os.Parcel
+import java.util.*
 
 class EventItem() {
     var id: Long = 0
     var title: String? = null
     var content: String? = null
-    var updateTime: String? = "Apr 14,2019"
+    var updateTime: String? = "todo"
     var createTime: String? = ""
+    var createDate: Date = Date()
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readLong()
