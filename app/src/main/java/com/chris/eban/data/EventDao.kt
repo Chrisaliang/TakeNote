@@ -13,11 +13,6 @@ abstract class EventDao {
     @Query("SELECT * FROM " + Tables.EVENT.TABLE_NAME + " WHERE id = :itemId ")
     abstract fun queryEventItem(itemId: Long): DataEvent
 
-    @Query("select * from " + Tables.EVENT.TABLE_NAME + " order by id desc")
-    abstract fun queryEventList(): List<Event>
-
-
-
     /****************  插入  **************************/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertEvent(event: DataEvent): Long
@@ -29,6 +24,7 @@ abstract class EventDao {
     /****************  删除   *************************/
     @Delete
     abstract fun deleteEvent(event: DataEvent)
+
     abstract fun insertEvent(event: Event): Long
 
     /****************  更新   *************************/
