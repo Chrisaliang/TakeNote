@@ -62,11 +62,13 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
         val value = item.value ?: return
         if (value.id == 0L) {
             // insert to db
-            eventSaveInsert.setItem(mapper.map(value))
+            val item1 = mapper.map(value)
+            eventSaveInsert.setItem(item1)
             eventSaveInsert.execute().subscribe(this)
         } else {
             // update db
-            eventSaveUpdate.setItem(mapper.map(value))
+            val item1 = mapper.map(value)
+            eventSaveUpdate.setItem(item1)
             eventSaveUpdate.execute().subscribe(this)
         }
     }
