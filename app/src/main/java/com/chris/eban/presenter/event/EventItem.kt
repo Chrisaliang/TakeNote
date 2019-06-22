@@ -1,6 +1,7 @@
 package com.chris.eban.presenter.event
 
 import android.os.Parcel
+
 import java.util.*
 
 class EventItem() {
@@ -20,8 +21,10 @@ class EventItem() {
     }
 
     constructor(title: String, content: String) : this() {
+
         this.title = title
         this.content = content
     }
+
 
 }

@@ -1,14 +1,18 @@
 package com.chris.eban.presenter.event
 
+
 import android.icu.text.SimpleDateFormat
+
 import com.chris.eban.domain.entity.DMEventListItem
 import java.util.*
 
 class EventListMapper {
 
+
     companion object {
         private const val pattern: String = "yyyyMMMdd"
     }
+
 
     internal fun map(content: List<DMEventListItem>): MutableList<EventItem> {
         val eventItems = ArrayList<EventItem>()
@@ -19,6 +23,7 @@ class EventListMapper {
     }
 
     fun map(dmEventListItem: DMEventListItem): EventItem {
+
         val item = EventItem()
         item.id = dmEventListItem.id
         item.title = dmEventListItem.title
@@ -32,11 +37,13 @@ class EventListMapper {
     private fun getTimeStr(date: Date?): String? {
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         return sdf.format(date)
+
     }
 
     fun map(item: EventItem): DMEventListItem {
         val dmEventListItem = DMEventListItem()
         dmEventListItem.id = item.id
+
         dmEventListItem.content = item.content!!
         dmEventListItem.title = item.title!!
         if (item.id == 0L)
@@ -44,6 +51,7 @@ class EventListMapper {
         else
             dmEventListItem.createDate = item.createDate
         dmEventListItem.updateDate = Date()
+
         return dmEventListItem
     }
 }

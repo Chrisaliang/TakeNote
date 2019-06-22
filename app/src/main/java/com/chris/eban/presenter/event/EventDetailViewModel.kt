@@ -3,8 +3,10 @@ package com.chris.eban.presenter.event
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.chris.eban.domain.Result
+
 import com.chris.eban.domain.entity.DMEventListItem
 import com.chris.eban.domain.usecase.EventItemQuery
+
 import com.chris.eban.domain.usecase.EventSaveDelete
 import com.chris.eban.domain.usecase.EventSaveInsert
 import com.chris.eban.domain.usecase.EventSaveUpdate
@@ -21,6 +23,7 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
 
     val item = MutableLiveData<EventItem>()
     private var mapper = EventListMapper()
+
     private var saved = true
     private var disposable: Disposable? = null
 
@@ -62,6 +65,7 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
         val value = item.value ?: return
         if (value.id == 0L) {
             // insert to db
+
             val item1 = mapper.map(value)
             eventSaveInsert.setItem(item1)
             eventSaveInsert.execute().subscribe(this)
@@ -69,6 +73,7 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
             // update db
             val item1 = mapper.map(value)
             eventSaveUpdate.setItem(item1)
+
             eventSaveUpdate.execute().subscribe(this)
         }
     }
@@ -86,7 +91,9 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
     }
 
     override fun onSuccess(longResult: Result<Long>) {
+
         // todo deal the result from room
+
         Objects.requireNonNull<EventItem>(item.value).id = longResult.content
     }
 
@@ -94,6 +101,7 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
         Timber.tag(TAG).e(e, "onError: ")
         checkDisposable()
     }
+
 
     override fun onCleared() {
         super.onCleared()
@@ -105,11 +113,13 @@ class EventDetailViewModel(private val eventItemQuery: EventItemQuery,
             disposable!!.dispose()
     }
 
+
     fun hadId(): Boolean {
         return item.value != null && item.value!!.id > 0
     }
 
     companion object {
+
         private const val TAG = "EventDetailViewModel"
     }
 }

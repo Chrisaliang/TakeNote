@@ -1,5 +1,6 @@
 package com.chris.eban.domain.entity
 
+
 import java.util.*
 
 class DMEventListItem {
@@ -8,4 +9,6 @@ class DMEventListItem {
     var content: String = ""
     var createDate: Date = Date()
     var updateDate: Date = Date()
+
+
 }
