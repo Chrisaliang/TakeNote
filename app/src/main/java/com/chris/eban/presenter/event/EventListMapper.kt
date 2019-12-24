@@ -4,13 +4,18 @@ package com.chris.eban.presenter.event
 import android.icu.text.SimpleDateFormat
 
 import com.chris.eban.domain.entity.DMEventListItem
+import timber.log.Timber
 import java.util.*
 
 class EventListMapper {
 
 
     companion object {
-        private const val pattern: String = "yyyyMMMdd"
+        private const val pattern: String = "MMM dd,yyyy"
+        //        todo change pattern
+        private const val patternToday: String = "HH:mm:ss"
+
+        private const val TAG = "EventListMapper"
     }
 
 
@@ -34,8 +39,22 @@ class EventListMapper {
         return item
     }
 
-    private fun getTimeStr(date: Date?): String? {
+    private fun getTimeStr(date: Date): String? {
+        Timber.tag(TAG).d("Time is %d", date.time)
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+
+        val calendar = Calendar.getInstance()
+        calendar.time = Date()
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        val today = calendar.time
+        val days = ((today.time - date.time) / (1000 * 60 * 60 * 24L))
+
+        if (days.compareTo(0) == 0)
+            sdf.applyPattern(patternToday)
+        else
+            sdf.applyPattern(pattern)
         return sdf.format(date)
 
     }

@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#A40040FF">
+            tools:background="#A40040FF">
 
 
             <ImageView
@@ -46,7 +46,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="4dp"
                 android:ellipsize="end"
                 android:maxEms="10"
                 android:maxLines="1"
@@ -67,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:ellipsize="end"
                 android:maxLines="@{item.title.length() > 0 ? 2 : 3}"
