@@ -6,8 +6,6 @@ import java.util.*
 
 class RoomTypeConverters {
 
-object RoomTypeConverters {
-
 
     @TypeConverter
     fun fromTimeStamp(timeStamp: Long?): Date? {

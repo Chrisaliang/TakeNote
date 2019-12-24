@@ -6,9 +6,6 @@ import com.chris.eban.domain.SingleUseCase
 
 import com.chris.eban.domain.entity.DMEventListItem
 
-import com.chris.eban.presenter.event.EventItem
-import com.chris.eban.presenter.event.EventListMapper
-
 import io.reactivex.Single
 import timber.log.Timber
 
@@ -19,14 +16,6 @@ class EventSaveInsert(private val jobThread: JobThread,
     private lateinit var item: DMEventListItem
 
     fun setItem(item: DMEventListItem) {
-
-    private val mapper: EventListMapper = EventListMapper()
-
-    // TODO: 2019/3/11 改用domain层数据对象
-    private var item: EventItem? = null
-
-    fun setItem(item: EventItem) {
-
         this.item = item
     }
 
@@ -34,19 +23,14 @@ class EventSaveInsert(private val jobThread: JobThread,
         return Single.just(repository)
                 .map { repository ->
                     Timber.tag(TAG).d("save a event:%s", item)
-
                     repository.saveEvent(item)
-
-                    repository.saveEvent(mapper.map(item!!))
-
                 }
                 .subscribeOn(jobThread.provideWorker())
                 .observeOn(jobThread.provideUI())
     }
 
     companion object {
-
         private const val TAG = "EventSaveInsert"
-
     }
+
 }

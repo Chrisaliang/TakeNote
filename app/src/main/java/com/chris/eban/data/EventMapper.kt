@@ -7,8 +7,6 @@ internal class EventMapper {
 
     fun map(events: List<DataEvent>): List<DMEventListItem> {
 
-    fun map(events: List<Event>): List<DMEventListItem> {
-
         val dmEventListItems = ArrayList<DMEventListItem>()
         for (event in events) {
             dmEventListItems.add(map(event))
@@ -17,8 +15,6 @@ internal class EventMapper {
     }
 
     fun map(event: DataEvent): DMEventListItem {
-
-    fun map(event: Event): DMEventListItem {
 
         val dmEventListItem = DMEventListItem()
         dmEventListItem.id = event.id
@@ -32,16 +28,7 @@ internal class EventMapper {
 
     fun map(item: DMEventListItem): DataEvent {
         return DataEvent(item.id, item.title, item.content, item.createDate, item.updateDate)
-
-        return dmEventListItem
     }
 
-    fun map(item: DMEventListItem): Event {
-        val event = Event()
-        event.id = item.id
-        event.content = item.content
-        event.title = item.title
-        return event
 
-    }
 }

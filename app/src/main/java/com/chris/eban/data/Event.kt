@@ -10,6 +10,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = TABLE_NAME)
+@Deprecated("see in DataEvent")
 class Event {
 
     @PrimaryKey(autoGenerate = true)
