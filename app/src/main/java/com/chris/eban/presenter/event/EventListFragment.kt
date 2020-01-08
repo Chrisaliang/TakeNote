@@ -9,11 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chris.eban.R
+import com.chris.eban.common.EventListItemDecoration
 import com.chris.eban.databinding.FragmentEventListBinding
 import com.chris.eban.presenter.BaseFragment
 import timber.log.Timber
@@ -50,8 +50,7 @@ class EventListFragment : BaseFragment() {
         itemTouchHelper.attachToRecyclerView(binding!!.listEvent)
         eventListAdapter = EventListAdapter()
         binding!!.listEvent.layoutManager = LinearLayoutManager(view.context)
-        binding!!.listEvent.addItemDecoration(
-                DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+        binding!!.listEvent.addItemDecoration(EventListItemDecoration())
         binding!!.listEvent.adapter = eventListAdapter
     }
 

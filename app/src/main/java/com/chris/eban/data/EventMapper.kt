@@ -6,6 +6,7 @@ import java.util.*
 internal class EventMapper {
 
     fun map(events: List<DataEvent>): List<DMEventListItem> {
+
         val dmEventListItems = ArrayList<DMEventListItem>()
         for (event in events) {
             dmEventListItems.add(map(event))
@@ -14,10 +15,12 @@ internal class EventMapper {
     }
 
     fun map(event: DataEvent): DMEventListItem {
+
         val dmEventListItem = DMEventListItem()
         dmEventListItem.id = event.id
         dmEventListItem.title = event.title
         dmEventListItem.content = event.content
+
         dmEventListItem.createDate = event.createTime
         dmEventListItem.updateDate = event.updateTime
         return dmEventListItem

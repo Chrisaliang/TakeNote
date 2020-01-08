@@ -8,7 +8,7 @@ class EventItem() {
     var id: Long = 0
     var title: String? = null
     var content: String? = null
-    var updateTime: String? = "todo"
+    var updateTime: String? = "Dec 24 2019"
     var createTime: String? = ""
     var createDate: Date = Date()
 

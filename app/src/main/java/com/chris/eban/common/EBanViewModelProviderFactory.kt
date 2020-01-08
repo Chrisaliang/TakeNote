@@ -8,7 +8,9 @@ import com.chris.eban.presenter.event.EventListViewModel
 
 class EBanViewModelProviderFactory(
         private val eventListQuery: EventListQuery,
+
         private val eventItemQuery: EventItemQuery,
+
         private val eventSaveInsert: EventSaveInsert,
         private val eventSaveUpdate: EventSaveUpdate,
         private val eventSaveDelete: EventSaveDelete
