@@ -11,9 +11,8 @@ class EventListMapper {
 
 
     companion object {
-        private const val pattern: String = "MMM dd,yyyy"
-        //        todo change pattern
-        private const val patternToday: String = "HH:mm:ss"
+        private const val pattern: String = "MMM dd, yyyy"
+        private const val patternToday: String = "HH:mm"
 
         private const val TAG = "EventListMapper"
     }
@@ -70,7 +69,6 @@ class EventListMapper {
         else
             dmEventListItem.createDate = item.createDate
         dmEventListItem.updateDate = Date()
-
         return dmEventListItem
     }
 }
