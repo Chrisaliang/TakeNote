@@ -13,9 +13,11 @@ import com.chris.eban.presenter.event.EventDetailActivity
 import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS
 import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS_EDIT
 import com.chris.eban.presenter.event.EventListFragment
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import timber.log.Timber
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,6 +39,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
+            Timber.tag(TAG).e("offset is %d", i)
+            if (i >= -210) {
+//                appBarLayout.setStatusBarForegroundResource(R.drawable.ic_launcher_background)
+                Timber.tag(TAG).e("background has changed!!!")
+                supportActionBar?.setDisplayShowTitleEnabled(false)
+            } else {
+                supportActionBar?.setDisplayShowTitleEnabled(true)
+            }
+        }
+        appBar.addOnOffsetChangedListener(listener)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
