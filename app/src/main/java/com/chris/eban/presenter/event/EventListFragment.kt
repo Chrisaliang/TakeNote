@@ -40,7 +40,7 @@ class EventListFragment : BaseFragment() {
 
         viewModel!!.init()
 
-        viewModel!!.eventList.observe(this, Observer<List<EventItem>> { items -> eventListAdapter!!.updateAll(items) })
+        viewModel!!.eventList.observe(this.viewLifecycleOwner, Observer<List<EventItem>> { items -> eventListAdapter!!.updateAll(items) })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
