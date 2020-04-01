@@ -16,4 +16,26 @@
     <string name="event_menu_item_share">share</string>
     <string name="event_menu_item_edit">edit</string>
     <string name="event_menu_item_delete">delete</string>
+
+
+    <string name="btn_name_clear">C</string>
+    <string name="btn_name_mod">%</string>
+    <string name="btn_name_emb">(  )</string>
+    <string name="btn_name_div">/</string>
+    <string name="btn_name_0">0</string>
+    <string name="btn_name_1">1</string>
+    <string name="btn_name_2">2</string>
+    <string name="btn_name_3">3</string>
+    <string name="btn_name_4">4</string>
+    <string name="btn_name_5">5</string>
+    <string name="btn_name_6">6</string>
+    <string name="btn_name_7">7</string>
+    <string name="btn_name_8">8</string>
+    <string name="btn_name_9">9</string>
+    <string name="btn_name_point">.</string>
+    <string name="btn_name_multiple">x</string>
+    <string name="btn_name_minus">-</string>
+    <string name="btn_name_add">+</string>
+    <string name="btn_name_op">+/-</string>
+    <string name="btn_name_equal">=</string>
 </resources>
