@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".presenter.CameraXActivity"/>
 
         <meta-data
             android:name="com.google.ar.core"
@@ -38,9 +39,7 @@
         <activity
             android:name=".presenter.event.EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".presenter.FaceDetectActivity" />
-
+        <activity android:name=".presenter.face.FaceDetectActivity" />
     </application>
 
 </manifest>

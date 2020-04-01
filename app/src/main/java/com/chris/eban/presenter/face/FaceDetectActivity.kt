@@ -1,4 +1,4 @@
-package com.chris.eban.presenter
+package com.chris.eban.presenter.face
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -11,7 +11,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.chris.eban.R
 import com.chris.eban.common.CameraSource
-import com.chris.eban.presenter.face.FaceContourDetectorProcessor
 import com.google.firebase.ml.common.FirebaseMLException
 import kotlinx.android.synthetic.main.activity_face_detect.*
 import timber.log.Timber

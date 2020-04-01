@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.FaceDetectActivity">
+    tools:context=".presenter.face.FaceDetectActivity">
 
     <com.chris.eban.common.CameraSourcePreview
         android:id="@+id/firePreview"
