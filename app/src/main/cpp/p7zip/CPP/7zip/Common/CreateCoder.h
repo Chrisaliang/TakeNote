@@ -104,7 +104,7 @@ extern CExternalCodecs g_ExternalCodecs;
 #define QUERY_ENTRY_ISetCompressCodecsInfo
 #define DECL_ISetCompressCodecsInfo
 #define IMPL_ISetCompressCodecsInfo
-#define EXTERNAL_CODECS_VARS2
+#define EXTERNAL_CODECS_VARS2 ( &__externalCodecs)
 #define DECL_EXTERNAL_CODECS_VARS
 #define EXTERNAL_CODECS_VARS
 #define EXTERNAL_CODECS_VARS_L

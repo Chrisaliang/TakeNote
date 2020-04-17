@@ -136,31 +136,31 @@ static bool str2args(const char* s,char argv[][ARGV_LEN_MAX],int* argc) {
 }
 
 
-JNIEXPORT jint JNICALL Java_com_example_wilson_zipdemo_zipdemo_ZipUtils_excuteCommand
-        (JNIEnv *env, jclass jzz, jstring command){
+extern "C" JNIEXPORT jint JNICALL Java_com_chris_eban_common_ZipUtils_executeCommand
+        (JNIEnv *env, jclass jzz, jstring command) {
     int ret = -1;
-    const char* ccommand = (const char*)env->GetStringUTFChars(command,NULL);
+    const char *ccommand = (const char *) env->GetStringUTFChars(command, NULL);
 
-    LOGI("start[%s]",ccommand);
+    LOGI("start[%s]", ccommand);
 
     int argc = 0;
     char temp[ARGC_MAX][ARGV_LEN_MAX] = {0};
-    char* argv[ARGC_MAX] = {0};
+    char *argv[ARGC_MAX] = {0};
 
-    if (str2args(ccommand,temp,&argc)==false) {
+    if (!str2args(ccommand, temp, &argc)) {
         return 7;
     }
 
-    for (int i=0;i<argc;i++) {
+    for (int i = 0; i < argc; i++) {
         argv[i] = temp[i];
-        LOGD("arg[%d]:[%s]",i,argv[i]);
+        LOGD("arg[%d]:[%s]", i, argv[i]);
     }
 
-    ret = main(argc,(const char**)argv);
+    ret = main(argc, (const char **) argv);
 
-    LOGI("end[%s]",ccommand);
+    LOGI("end[%s]", ccommand);
 
-    env->ReleaseStringUTFChars(command,ccommand);
+    env->ReleaseStringUTFChars(command, ccommand);
 
     return ret;
 }
