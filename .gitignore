@@ -8,3 +8,4 @@
 .externalNativeBuild
 keyStore.gradle
 chrisaliang.keystore
+.cxx
