@@ -6,51 +6,33 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.chris.eban.R
 import com.chris.eban.presenter.event.EventDetailActivity
 import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS
 import com.chris.eban.presenter.event.EventDetailActivity.Companion.PAGE_STATUS_EDIT
-import com.chris.eban.presenter.event.EventListFragment
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import timber.log.Timber
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
-        if (savedInstanceState == null)
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_replace, EventListFragment())
-                    .commitNow()
+        val appbarConfiguration = AppBarConfiguration.Builder(
+                R.id.nav_event,
+                R.id.nav_gallery,
+                R.id.nav_slideshow,
+                R.id.nav_manage
+        ).build()
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+//        NavigationUI.setupActionBarWithNavController(this, navController, appbarConfiguration)
+        NavigationUI.setupWithNavController(nav_view, navController)
+        NavigationUI.navigateUp(navController, appbarConfiguration)
 
-        fab.setOnClickListener { createNewEvent() }
-
-        val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        nav_view.setNavigationItemSelectedListener(this)
-
-        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
-            Timber.tag(TAG).e("offset is %d", i)
-            if (i >= -210) {
-//                appBarLayout.setStatusBarForegroundResource(R.drawable.ic_launcher_background)
-                Timber.tag(TAG).e("background has changed!!!")
-                supportActionBar?.setDisplayShowTitleEnabled(false)
-            } else {
-                supportActionBar?.setDisplayShowTitleEnabled(true)
-            }
-        }
-        appBar.addOnOffsetChangedListener(listener)
+//        fab.setOnClickListener { createNewEvent() }
 
     }
 
@@ -73,13 +55,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         startActivityForResult(intent, REQUEST_CODE_CREATE)
     }
 
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -95,34 +70,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
-            }
-            R.id.nav_gallery -> {
-
-            }
-            R.id.nav_slideshow -> {
-                startActivity(Intent(this, FaceDetectActivity::class.java))
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }
-        }
-        Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
     }
 
     companion object {

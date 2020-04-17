@@ -1,6 +1,7 @@
 package com.chris.eban
 
 import com.chris.eban.presenter.MainActivity
+import com.chris.eban.presenter.ManagerFragment
 import com.chris.eban.presenter.event.EventDetailActivity
 import com.chris.eban.presenter.event.EventListFragment
 
@@ -24,4 +25,7 @@ internal abstract class AndroidComponentModule {
 
     @ContributesAndroidInjector
     abstract fun eventListFragment(): EventListFragment
+
+    @ContributesAndroidInjector
+    abstract fun managerFragment(): ManagerFragment
 }

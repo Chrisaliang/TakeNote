@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.chris.eban.R
 import com.chris.eban.databinding.ActivityEventDetailBinding
 import com.chris.eban.presenter.BaseActivity
@@ -24,6 +23,7 @@ import javax.inject.Inject
 class EventDetailActivity : BaseActivity() {
 
     private var status: String? = null
+
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
@@ -49,7 +49,7 @@ class EventDetailActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        viewModel = ViewModelProviders.of(this, factory).get(EventDetailViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(EventDetailViewModel::class.java)
         // 判断启动方式，切换编辑状态
         val intent = intent
         status = intent.getStringExtra(PAGE_STATUS)

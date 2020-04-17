@@ -1,13 +1,12 @@
 package com.chris.eban.presenter.event
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +19,7 @@ import javax.inject.Inject
 
 class EventListFragment : BaseFragment() {
     private var binding: FragmentEventListBinding? = null
+
     @Inject
     lateinit var factory: ViewModelProvider.Factory
     private var eventListAdapter: EventListAdapter? = null
@@ -29,6 +29,19 @@ class EventListFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_list, container, false)
         binding!!.lifecycleOwner = this
+
+//        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
+//            Timber.tag(TAG).e("offset is %d", i)
+//            if (i >= -210) {
+//                Timber.tag(TAG).e("background has changed!!!")
+//                binding!!.toolbar.title = ""
+//            } else {
+//                binding!!.toolbar.setTitle(R.string.app_name)
+//            }
+//        }
+//        binding!!.appBar.removeOnOffsetChangedListener(listener)
+//        binding!!.appBar.addOnOffsetChangedListener(listener)
+
         return binding!!.root
     }
 
@@ -51,11 +64,19 @@ class EventListFragment : BaseFragment() {
         binding!!.listEvent.layoutManager = LinearLayoutManager(view.context)
         binding!!.listEvent.addItemDecoration(EventListItemDecoration())
         binding!!.listEvent.adapter = eventListAdapter
+
+        binding?.fab?.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_event_create)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         viewModel!!.queryChanged()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
     }
 
     internal inner class ItemTouchHelperCallBack : ItemTouchHelper.Callback() {

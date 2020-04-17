@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slide_menu_navigation"
+    app:startDestination="@id/nav_event">
+
+    <fragment
+        android:id="@+id/nav_event"
+        android:name="com.chris.eban.presenter.event.EventListFragment"
+        android:label="EventListFragment"
+        tools:layout="@layout/fragment_event_list">
+
+        <action
+            android:id="@+id/action_event_create"
+            app:destination="@+id/eventDetailActivity" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_manage"
+        android:name="com.chris.eban.presenter.ManagerFragment"
+        android:label="ToolsFragment">
+        <action
+            android:id="@+id/action_nav_manage_to_eventDetailActivity2"
+            app:destination="@id/eventDetailActivity" />
+    </fragment>
+
+    <activity
+        android:id="@+id/eventDetailActivity"
+        android:name="com.chris.eban.presenter.event.EventDetailActivity"
+        android:label="EventDetailActivity"
+        tools:layout="@layout/activity_create_event" />
+
+
+</navigation>

@@ -38,4 +38,9 @@
     <string name="btn_name_add">+</string>
     <string name="btn_name_op">+/-</string>
     <string name="btn_name_equal">=</string>
+    <string name="bottom_nav_title_event">event</string>
+    <string name="bottom_nav_title_gallery">Gallery</string>
+    <string name="bottom_nav_title_slideshow">Slideshow</string>
+    <string name="bottom_nav_title_tools">Tools</string>
+
 </resources>

@@ -37,7 +37,7 @@
         </activity>
         <activity
             android:name=".presenter.event.EventDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.Light" />
 
         <activity android:name=".presenter.FaceDetectActivity" />
 
