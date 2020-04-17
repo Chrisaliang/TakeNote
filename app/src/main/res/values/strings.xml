@@ -38,12 +38,4 @@
     <string name="btn_name_add">+</string>
     <string name="btn_name_op">+/-</string>
     <string name="btn_name_equal">=</string>
-    <string name="progress_title">progress_title</string>
-    <string name="progress_message">progress_message</string>
-    <string name="msg_ret_success">msg_ret_success</string>
-    <string name="msg_ret_warning">msg_ret_warning</string>
-    <string name="msg_ret_fault">msg_ret_fault</string>
-    <string name="msg_ret_command">msg_ret_command</string>
-    <string name="msg_ret_memory">msg_ret_memory</string>
-    <string name="msg_ret_user_stop">msg_ret_user_stop</string>
 </resources>
