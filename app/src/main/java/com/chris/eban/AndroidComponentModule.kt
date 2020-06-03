@@ -4,7 +4,7 @@ import com.chris.eban.presenter.MainActivity
 import com.chris.eban.presenter.ManagerFragment
 import com.chris.eban.presenter.event.EventDetailActivity
 import com.chris.eban.presenter.event.EventListFragment
-
+import com.chris.eban.presenter.gallery.GalleryFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -25,6 +25,9 @@ internal abstract class AndroidComponentModule {
 
     @ContributesAndroidInjector
     abstract fun eventListFragment(): EventListFragment
+
+    @ContributesAndroidInjector
+    abstract fun galleryFragment(): GalleryFragment
 
     @ContributesAndroidInjector
     abstract fun managerFragment(): ManagerFragment

@@ -18,12 +18,19 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.chris.eban.presenter.gallery.GalleryFragment"
+        android:label="GalleryFragment"
+        tools:layout="@layout/fragment_gallery">
+
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_manage"
+        tools:layout="@layout/fragment_manager"
         android:name="com.chris.eban.presenter.ManagerFragment"
         android:label="ToolsFragment">
-        <action
-            android:id="@+id/action_nav_manage_to_eventDetailActivity2"
-            app:destination="@id/eventDetailActivity" />
+
     </fragment>
 
     <activity

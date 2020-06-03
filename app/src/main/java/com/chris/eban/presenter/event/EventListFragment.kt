@@ -14,65 +14,67 @@ import com.chris.eban.R
 import com.chris.eban.common.EventListItemDecoration
 import com.chris.eban.databinding.FragmentEventListBinding
 import com.chris.eban.presenter.BaseFragment
+import com.google.android.material.appbar.AppBarLayout
 import timber.log.Timber
 import javax.inject.Inject
 
 class EventListFragment : BaseFragment() {
-    private var binding: FragmentEventListBinding? = null
+    private lateinit var binding: FragmentEventListBinding
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
-    private var eventListAdapter: EventListAdapter? = null
-    private var viewModel: EventListViewModel? = null
+    private lateinit var eventListAdapter: EventListAdapter
+    private lateinit var viewModel: EventListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_list, container, false)
-        binding!!.lifecycleOwner = this
+        binding.lifecycleOwner = this
 
-//        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
-//            Timber.tag(TAG).e("offset is %d", i)
-//            if (i >= -210) {
-//                Timber.tag(TAG).e("background has changed!!!")
-//                binding!!.toolbar.title = ""
-//            } else {
-//                binding!!.toolbar.setTitle(R.string.app_name)
-//            }
-//        }
-//        binding!!.appBar.removeOnOffsetChangedListener(listener)
-//        binding!!.appBar.addOnOffsetChangedListener(listener)
+        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
+            Timber.tag(TAG).e("offset is %d", i)
+            if (i >= -210) {
+                Timber.tag(TAG).e("background has changed!!!")
+                binding.toolbar.title = ""
+            } else {
+                binding.toolbar.setTitle(R.string.app_name)
+            }
+        }
+        binding.appBar.removeOnOffsetChangedListener(listener)
+        binding.appBar.addOnOffsetChangedListener(listener)
 
-        return binding!!.root
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this.viewModelStore, factory).get(EventListViewModel::class.java)
         Timber.tag(TAG).d("onActivityCreated: %s", viewModel)
-        binding!!.event = viewModel
+        binding.event = viewModel
 
-        viewModel!!.init()
+        viewModel.init()
 
-        viewModel!!.eventList.observe(this.viewLifecycleOwner, Observer<List<EventItem>> { items -> eventListAdapter!!.updateAll(items) })
+        viewModel.eventList.observe(this.viewLifecycleOwner, Observer<List<EventItem>> { items ->
+            eventListAdapter.updateAll(items)
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallBack())
-        itemTouchHelper.attachToRecyclerView(binding!!.listEvent)
+        itemTouchHelper.attachToRecyclerView(binding.listEvent)
         eventListAdapter = EventListAdapter()
-        binding!!.listEvent.layoutManager = LinearLayoutManager(view.context)
-        binding!!.listEvent.addItemDecoration(EventListItemDecoration())
-        binding!!.listEvent.adapter = eventListAdapter
+        binding.listEvent.layoutManager = LinearLayoutManager(view.context)
+        binding.listEvent.addItemDecoration(EventListItemDecoration())
+        binding.listEvent.adapter = eventListAdapter
 
-        binding?.fab?.setOnClickListener {
+        binding.fab.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_event_create)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel!!.queryChanged()
+        viewModel.queryChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -96,12 +98,12 @@ class EventListFragment : BaseFragment() {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             if (direction == ItemTouchHelper.LEFT) {
-                Toast.makeText(binding!!.root.context, "to left", Toast.LENGTH_SHORT).show()
-                val item = eventListAdapter!!.removeItem(viewHolder.adapterPosition)
+                Toast.makeText(binding.root.context, "to left", Toast.LENGTH_SHORT).show()
+                val item = eventListAdapter.removeItem(viewHolder.adapterPosition)
                 Timber.tag(TAG).d("item :%s is removed", item)
-                viewModel!!.removeItem(item)
+                viewModel.removeItem(item)
             } else {
-                Toast.makeText(binding!!.root.context, "to right", Toast.LENGTH_SHORT).show()
+                Toast.makeText(binding.root.context, "to right", Toast.LENGTH_SHORT).show()
             }
         }
     }
