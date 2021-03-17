@@ -26,10 +26,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.chris.eban.presenter.slide.SlideShowFragment"
+        android:label="SlideShow"
+        tools:layout="@layout/slide_show_fragment" />
+
+    <fragment
         android:id="@+id/nav_manage"
-        tools:layout="@layout/fragment_manager"
         android:name="com.chris.eban.presenter.ManagerFragment"
-        android:label="ToolsFragment">
+        android:label="ToolsFragment"
+        tools:layout="@layout/fragment_manager">
 
     </fragment>
 

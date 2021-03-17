@@ -56,7 +56,8 @@ class EventListAdapter internal constructor() : RecyclerView.Adapter<EventListAd
         return data.removeAt(position)
     }
 
-    inner class EventListViewHolder(private val binding: ItemEventListBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class EventListViewHolder(private val binding: ItemEventListBinding)
+        : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private var item: EventItem? = null
 
         init {
