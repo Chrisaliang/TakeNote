@@ -14,12 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:inputType="number"
-            android:text="@string/action_create_save"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <requestFocus />
-
         </com.chris.eban.common.PinEditTextView>
 
         <com.chris.eban.common.LeonView

@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +14,6 @@ import com.chris.eban.R
 import com.chris.eban.common.EventListItemDecoration
 import com.chris.eban.databinding.FragmentEventListBinding
 import com.chris.eban.presenter.BaseFragment
-import com.google.android.material.appbar.AppBarLayout
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,17 +30,17 @@ class EventListFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_list, container, false)
         binding.lifecycleOwner = this
 
-        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
-            Timber.tag(TAG).e("offset is %d", i)
-            if (i >= -210) {
-                Timber.tag(TAG).e("background has changed!!!")
-                binding.toolbar.title = ""
-            } else {
-                binding.toolbar.setTitle(R.string.app_name)
-            }
-        }
-        binding.appBar.removeOnOffsetChangedListener(listener)
-        binding.appBar.addOnOffsetChangedListener(listener)
+//        val listener = AppBarLayout.OnOffsetChangedListener { appBarLayout: AppBarLayout, i: Int ->
+//            Timber.tag(TAG).e("offset is %d", i)
+//            if (i >= -210) {
+//                Timber.tag(TAG).e("background has changed!!!")
+//                binding.toolbar.title = ""
+//            } else {
+//                binding.toolbar.setTitle(R.string.app_name)
+//            }
+//        }
+//        binding.appBar.removeOnOffsetChangedListener(listener)
+//        binding.appBar.addOnOffsetChangedListener(listener)
 
         return binding.root
     }
@@ -49,7 +48,7 @@ class EventListFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this.viewModelStore, factory).get(EventListViewModel::class.java)
-        Timber.tag(TAG).d("onActivityCreated: %s", viewModel)
+        Timber.d("onActivityCreated: %s", viewModel)
         binding.event = viewModel
 
         viewModel.init()
@@ -68,7 +67,7 @@ class EventListFragment : BaseFragment() {
         binding.listEvent.adapter = eventListAdapter
 
         binding.fab.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_event_create)
+            findNavController(it).navigate(R.id.action_event_create)
         }
     }
 
@@ -100,16 +99,11 @@ class EventListFragment : BaseFragment() {
             if (direction == ItemTouchHelper.LEFT) {
                 Toast.makeText(binding.root.context, "to left", Toast.LENGTH_SHORT).show()
                 val item = eventListAdapter.removeItem(viewHolder.adapterPosition)
-                Timber.tag(TAG).d("item :%s is removed", item)
+                Timber.d("item :%s is removed", item)
                 viewModel.removeItem(item)
             } else {
                 Toast.makeText(binding.root.context, "to right", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    companion object {
-
-        private const val TAG = "EventListFragment"
     }
 }
